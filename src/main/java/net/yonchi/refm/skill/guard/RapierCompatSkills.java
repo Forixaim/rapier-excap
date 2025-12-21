@@ -74,13 +74,13 @@ public class RapierCompatSkills {
             }).addGuardBreakMotion(RapierWeaponCategories.WITHER_RAPIER, (item, player) -> {
                 return Animations.BIPED_COMMON_NEUTRALIZED;
             }).addAdvancedGuardMotion(RapierWeaponCategories.RAPIER, (item, player) -> {
-                return List.of(RapierAnimations.RAPIER_GUARD_PARRY);
+                return List.of(RapierAnimations.RAPIER_GUARD_DEFLECT1, RapierAnimations.RAPIER_GUARD_DEFLECT2);
             }).addAdvancedGuardMotion(RapierWeaponCategories.ENDER_RAPIER, (item, player) -> {
-                return List.of(RapierAnimations.RAPIER_GUARD_PARRY_ENDER);
+                return List.of(RapierAnimations.RAPIER_GUARD_DEFLECT1, RapierAnimations.RAPIER_GUARD_DEFLECT2);
             }).addAdvancedGuardMotion(RapierWeaponCategories.OCEAN_RAPIER, (item, player) -> {
-                return List.of(RapierAnimations.RAPIER_GUARD_PARRY_OCEAN);
+                return List.of(RapierAnimations.RAPIER_GUARD_DEFLECT1, RapierAnimations.RAPIER_GUARD_DEFLECT2);
             }).addAdvancedGuardMotion(RapierWeaponCategories.WITHER_RAPIER, (item, player) -> {
-                return List.of(RapierAnimations.RAPIER_GUARD_PARRY_WITHER);
+                return List.of(RapierAnimations.RAPIER_GUARD_DEFLECT1, RapierAnimations.RAPIER_GUARD_DEFLECT2);
             });
             System.out.println("[RapierCompatSkills] Rapier Parry animations has been implemented");
         }

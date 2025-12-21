@@ -9,9 +9,8 @@ import net.yonchi.refm.gameasset.RapierAnimations;
 import net.yonchi.refm.world.capabilities.item.RapierWeaponCategories;
 import net.yonchi.refm.world.item.RapierAddonItems;
 
-//import reascer.wom.gameasset.WOMSkills;
+import reascer.wom.gameasset.WOMSkills;
 
-import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.api.client.forgeevent.WeaponCategoryIconRegisterEvent;
 import yesman.epicfight.compat.ICompatModule;
 import yesman.epicfight.gameasset.Animations;
@@ -26,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
 
-public class RapierGuardWoM implements ICompatModule {
+public class RapierCompatWoM implements ICompatModule {
     public static void registerGuard(Event event) {
     }
 
@@ -42,7 +41,7 @@ public class RapierGuardWoM implements ICompatModule {
     @Override
     public void onForgeEventBusClient(IEventBus iEventBus) {
     }
-/*
+
     public static void regIcon(WeaponCategoryIconRegisterEvent event) {
         event.registerCategory(RapierWeaponCategories.RAPIER, new ItemStack(RapierAddonItems.IRON_RAPIER.get()));
         event.registerCategory(RapierWeaponCategories.ENDER_RAPIER, new ItemStack(RapierAddonItems.ENDERITE_RAPIER.get()));
@@ -78,28 +77,28 @@ public class RapierGuardWoM implements ICompatModule {
         guardBreakMotions.put(RapierWeaponCategories.RAPIER, (item, player) ->
                 Animations.BIPED_COMMON_NEUTRALIZED);
         advancedGuardMotions.put(RapierWeaponCategories.RAPIER, (itemCap, playerpatch) ->
-                RapierAnimations.RAPIER_AIR_SLASH);
+                RapierAnimations.RAPIER_GUARD_PARRY);
         //Ender
         guardMotions.put(RapierWeaponCategories.ENDER_RAPIER, (item, player) ->
                 RapierAnimations.RAPIER_GUARD_HIT);
         guardBreakMotions.put(RapierWeaponCategories.ENDER_RAPIER, (item, player) ->
                 Animations.BIPED_COMMON_NEUTRALIZED);
         advancedGuardMotions.put(RapierWeaponCategories.ENDER_RAPIER, (itemCap, playerpatch) ->
-                RapierAnimations.RAPIER_AIR_SLASH_ENDER);
+                RapierAnimations.RAPIER_GUARD_PARRY_ENDER);
         //Ocean
         guardMotions.put(RapierWeaponCategories.OCEAN_RAPIER, (item, player) ->
                 RapierAnimations.RAPIER_GUARD_HIT);
         guardBreakMotions.put(RapierWeaponCategories.OCEAN_RAPIER, (item, player) ->
                 Animations.BIPED_COMMON_NEUTRALIZED);
         advancedGuardMotions.put(RapierWeaponCategories.OCEAN_RAPIER, (itemCap, playerpatch) ->
-                RapierAnimations.RAPIER_AIR_SLASH_OCEAN);
+                RapierAnimations.RAPIER_GUARD_PARRY_OCEAN);
         //Wither
         guardMotions.put(RapierWeaponCategories.WITHER_RAPIER, (item, player) ->
                 RapierAnimations.RAPIER_GUARD_HIT);
         guardBreakMotions.put(RapierWeaponCategories.WITHER_RAPIER, (item, player) ->
                 Animations.BIPED_COMMON_NEUTRALIZED);
         advancedGuardMotions.put(RapierWeaponCategories.WITHER_RAPIER, (itemCap, playerpatch) ->
-                RapierAnimations.RAPIER_AIR_SLASH_WITHER);
+                RapierAnimations.RAPIER_GUARD_PARRY_WITHER);
 
         Field temp;
         Map<WeaponCategory, BiFunction<CapabilityItem, PlayerPatch<?>, ?>> target;
@@ -131,5 +130,6 @@ public class RapierGuardWoM implements ICompatModule {
         for (WeaponCategory weaponCapability : advancedGuardMotions.keySet()) {
             target.put(weaponCapability, advancedGuardMotions.get(weaponCapability));
         }
-    }*/
+
+    }
 }

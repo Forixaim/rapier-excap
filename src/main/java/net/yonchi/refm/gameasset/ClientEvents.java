@@ -17,7 +17,6 @@ public class ClientEvents {
             RapierAnimations.ReusableEvents.spawnParticlesWither();
             RapierAnimations.ReusableEvents.spawnParticlesWitherBig();
             RapierAnimations.ReusableEvents.spawnParticlesWitherTiny();
-            RapierAnimations.ReusableEvents.spawnParticlesAmethyst();
         }
     }
 }

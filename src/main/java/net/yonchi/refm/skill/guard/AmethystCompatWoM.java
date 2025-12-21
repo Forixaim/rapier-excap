@@ -9,9 +9,8 @@ import net.yonchi.refm.gameasset.RapierAnimations;
 import net.yonchi.refm.world.capabilities.item.RapierWeaponCategories;
 import net.yonchi.refm.world.item.RapierAddonItems;
 
-//import reascer.wom.gameasset.WOMSkills;
+import reascer.wom.gameasset.WOMSkills;
 
-import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.api.client.forgeevent.WeaponCategoryIconRegisterEvent;
 import yesman.epicfight.compat.ICompatModule;
 import yesman.epicfight.gameasset.Animations;
@@ -26,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
 
-public class AmethystGuardWoM implements ICompatModule {
+public class AmethystCompatWoM implements ICompatModule {
     public static void registerGuard(Event event) {
     }
 
@@ -42,7 +41,7 @@ public class AmethystGuardWoM implements ICompatModule {
     @Override
     public void onForgeEventBusClient(IEventBus iEventBus) {
     }
-/*
+
     public static void regIcon(WeaponCategoryIconRegisterEvent event) {
         event.registerCategory(RapierWeaponCategories.AMETHYST_RAPIER, new ItemStack(RapierAddonItems.AMETHYST_RAPIER.get()));
     }
@@ -75,7 +74,7 @@ public class AmethystGuardWoM implements ICompatModule {
         guardBreakMotions.put(RapierWeaponCategories.AMETHYST_RAPIER, (item, player) ->
                 Animations.BIPED_COMMON_NEUTRALIZED);
         advancedGuardMotions.put(RapierWeaponCategories.AMETHYST_RAPIER, (itemCap, playerpatch) ->
-                RapierAnimations.RAPIER_AIR_SLASH_AMETHYST);
+                RapierAnimations.RAPIER_GUARD_PARRY_AMETHYST);
 
         Field temp;
         Map<WeaponCategory, BiFunction<CapabilityItem, PlayerPatch<?>, ?>> target;
@@ -107,5 +106,5 @@ public class AmethystGuardWoM implements ICompatModule {
         for (WeaponCategory weaponCapability : advancedGuardMotions.keySet()) {
             target.put(weaponCapability, advancedGuardMotions.get(weaponCapability));
         }
-    }*/
+    }
 }

@@ -52,7 +52,7 @@ public class AmethystCompatSkills implements ICompatModule {
             }).addGuardBreakMotion(RapierWeaponCategories.AMETHYST_RAPIER, (item, player) -> {
                 return Animations.BIPED_COMMON_NEUTRALIZED;
             }).addAdvancedGuardMotion(RapierWeaponCategories.AMETHYST_RAPIER, (item, player) -> {
-                return List.of(RapierAnimations.RAPIER_GUARD_PARRY, RapierAnimations.RAPIER_GUARD_PARRY_AMETHYST);
+                return List.of(RapierAnimations.RAPIER_GUARD_DEFLECT1, RapierAnimations.RAPIER_GUARD_DEFLECT2);
             });
             System.out.println("[AmethystCompatSkills] Amethyst Parry animations has been implemented");
         }

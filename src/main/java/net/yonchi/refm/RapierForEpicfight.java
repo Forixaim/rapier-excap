@@ -19,12 +19,11 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.yonchi.refm.gameasset.RapierSounds;
 import net.yonchi.refm.skill.guard.AmethystCompatSkills;
 import net.yonchi.refm.skill.guard.RapierCompatSkills;
-import net.yonchi.refm.skill.guard.RapierGuardWoM;
-import net.yonchi.refm.skill.guard.AmethystGuardWoM;
+import net.yonchi.refm.skill.guard.RapierCompatWoM;
+import net.yonchi.refm.skill.guard.AmethystCompatWoM;
 import net.yonchi.refm.world.item.RapierTab;
 import net.yonchi.refm.skill.RapierSkillDataKeys;
 import net.yonchi.refm.world.capabilities.item.RapierWeaponCategories;
-import net.yonchi.refm.api.animation.configs.RapierStaminaConfig;
 import net.yonchi.refm.gameasset.RapierAnimations;
 import net.yonchi.refm.world.item.RapierAddonItems;
 
@@ -62,25 +61,21 @@ public class RapierForEpicfight {
             proxy = new RapierAnimations.ServerProxy();
         }
 
-        if (ModList.get().isLoaded("efstaminainteractions")) {
-            ICompatModule.loadCompatModule(eventBus, RapierStaminaConfig.class);
-            bus.addListener(RapierStaminaConfig::registerStamina);
-        }
         if (ModList.get().isLoaded("irons_spellbooks")) {
             ICompatModule.loadCompatModule(eventBus, AmethystCompatSkills.class);
             bus.addListener(AmethystCompatSkills::forceGuard);
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> bus.addListener(AmethystCompatSkills::onIconCreate));
         }
         if (ModList.get().isLoaded("wom")) {
-            ICompatModule.loadCompatModule(eventBus, RapierGuardWoM.class);
-            //bus.addListener(RapierGuardWoM::buildSkillEvent);
-            //DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> bus.addListener(RapierGuardWoM::regIcon));
+            ICompatModule.loadCompatModule(eventBus, RapierCompatWoM.class);
+            bus.addListener(RapierCompatWoM::buildSkillEvent);
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> bus.addListener(RapierCompatWoM::regIcon));
         }
         if (ModList.get().isLoaded("wom")) {
             if (ModList.get().isLoaded("irons_spellbooks")) {
-                ICompatModule.loadCompatModule(eventBus, AmethystGuardWoM.class);
-                //bus.addListener(AmethystGuardWoM::buildSkillEvent);
-                //DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> bus.addListener(AmethystGuardWoM::regIcon));
+                ICompatModule.loadCompatModule(eventBus, AmethystCompatWoM.class);
+                bus.addListener(AmethystCompatWoM::buildSkillEvent);
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> bus.addListener(AmethystCompatWoM::regIcon));
             }
         }
     }
