@@ -145,6 +145,10 @@ dependencies {
     implementation fg.deobf("curse.maven:parcool-482378:7245082")
     implementation fg.deobf("curse.maven:weapons-of-miracles-epicfight-918614:7344724")
 
+    implementation fg.deobf("curse.maven:epicfight-nightfall-1307848:7307026")
+    implementation fg.deobf("curse.maven:epic-fight-avalon-1268823:7380216")
+    implementation fg.deobf("curse.maven:epic-fight-invincible-1184379:7341228")
+
     //implementation fg.deobf("curse.maven:sophisticated-backpacks-422301:6587116")
     //implementation fg.deobf("curse.maven:sophisticated-core-618298:6596375")
     implementation fg.deobf("curse.maven:curios-309927:6418456")

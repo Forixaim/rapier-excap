@@ -17,10 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import net.yonchi.refm.gameasset.RapierSounds;
-import net.yonchi.refm.skill.guard.AmethystCompatSkills;
-import net.yonchi.refm.skill.guard.RapierCompatSkills;
-import net.yonchi.refm.skill.guard.RapierCompatWoM;
-import net.yonchi.refm.skill.guard.AmethystCompatWoM;
+import net.yonchi.refm.skill.guard.*;
 import net.yonchi.refm.world.item.RapierTab;
 import net.yonchi.refm.skill.RapierSkillDataKeys;
 import net.yonchi.refm.world.capabilities.item.RapierWeaponCategories;
@@ -71,11 +68,23 @@ public class RapierForEpicfight {
             bus.addListener(RapierCompatWoM::buildSkillEvent);
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> bus.addListener(RapierCompatWoM::regIcon));
         }
+        if (ModList.get().isLoaded("efn")) {
+            ICompatModule.loadCompatModule(eventBus, RapierCompatENF.class);
+            bus.addListener(RapierCompatENF::forceGuard);
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> bus.addListener(RapierCompatENF::onIconCreate));
+        }
         if (ModList.get().isLoaded("wom")) {
             if (ModList.get().isLoaded("irons_spellbooks")) {
                 ICompatModule.loadCompatModule(eventBus, AmethystCompatWoM.class);
                 bus.addListener(AmethystCompatWoM::buildSkillEvent);
                 DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> bus.addListener(AmethystCompatWoM::regIcon));
+            }
+        }
+        if (ModList.get().isLoaded("efn")) {
+            if (ModList.get().isLoaded("irons_spellbooks")) {
+                ICompatModule.loadCompatModule(eventBus, AmethystCompatENF.class);
+                bus.addListener(AmethystCompatENF::forceGuard);
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> bus.addListener(AmethystCompatENF::onIconCreate));
             }
         }
     }
