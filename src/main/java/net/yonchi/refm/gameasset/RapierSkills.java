@@ -57,7 +57,7 @@ public class RapierSkills {
                 .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE, EpicFightDamageTypeTags.FINISHER));
         DEADLYBACKFLIP = deadlybackflip;
 
-        WeaponInnateSkill deadlybackflip_ender = modRegistry.build("deadlybackflip_ender", DeadlyBackflip_EnderSkill::new, WeaponInnateSkill.createWeaponInnateBuilder());
+        WeaponInnateSkill deadlybackflip_ender = modRegistry.build("deadlybackflip_ender", DeadlyBackflipSkill_Ender::new, WeaponInnateSkill.createWeaponInnateBuilder());
         deadlybackflip_ender
                 .newProperty()
                 .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
@@ -79,7 +79,7 @@ public class RapierSkills {
                 .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.BYPASS_DODGE, EpicFightDamageTypeTags.FINISHER));
         DEADLYBACKFLIP_ENDER = deadlybackflip_ender;
 
-        WeaponInnateSkill deadlybackflip_ocean = modRegistry.build("deadlybackflip_ocean", DeadlyBackflipSkill_OceanSkill::new, WeaponInnateSkill.createWeaponInnateBuilder());
+        WeaponInnateSkill deadlybackflip_ocean = modRegistry.build("deadlybackflip_ocean", DeadlyBackflipSkill_Ocean::new, WeaponInnateSkill.createWeaponInnateBuilder());
         deadlybackflip_ocean
                 .newProperty()
                 .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
@@ -97,7 +97,7 @@ public class RapierSkills {
                 .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE, EpicFightDamageTypeTags.FINISHER));
         DEADLYBACKFLIP_OCEAN = deadlybackflip_ocean;
 
-        WeaponInnateSkill deadlybackflip_wither = modRegistry.build("deadlybackflip_wither", DeadlyBackflipSkill_WitherSkill::new, WeaponInnateSkill.createWeaponInnateBuilder());
+        WeaponInnateSkill deadlybackflip_wither = modRegistry.build("deadlybackflip_wither", DeadlyBackflipSkill_Wither::new, WeaponInnateSkill.createWeaponInnateBuilder());
         deadlybackflip_wither
                 .newProperty()
                 .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
@@ -120,7 +120,7 @@ public class RapierSkills {
                 .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.BYPASS_DODGE, EpicFightDamageTypeTags.FINISHER));
         DEADLYBACKFLIP_WITHER = deadlybackflip_wither;
 
-        WeaponInnateSkill deadlybackflip_amethyst = modRegistry.build("deadlybackflip_amethyst", DeadlyBackflipSkill_AmethystSkill::new, WeaponInnateSkill.createWeaponInnateBuilder());
+        WeaponInnateSkill deadlybackflip_amethyst = modRegistry.build("deadlybackflip_amethyst", DeadlyBackflipSkill_Amethyst::new, WeaponInnateSkill.createWeaponInnateBuilder());
         deadlybackflip_amethyst
                 .newProperty()
                 .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))

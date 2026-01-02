@@ -25,16 +25,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class DeadlyBackflipSkill_AmethystSkill extends WeaponInnateSkill {
-    private static final UUID EVENT_UUID = UUID.fromString("1f6aea85-2194-4761-af8e-1a5c99c4f192");
+public class DeadlyBackflipSkill_Ocean extends WeaponInnateSkill {
+    private static final UUID EVENT_UUID = UUID.fromString("1f6aea85-2194-4761-af8e-1a5c99c4f789");
     public final AssetAccessor<? extends AttackAnimation> first;
     public final AssetAccessor<? extends AttackAnimation> second;
     public final AssetAccessor<? extends AttackAnimation> fail;
 
-    public DeadlyBackflipSkill_AmethystSkill(SkillBuilder<? extends WeaponInnateSkill> builder) {
+    public DeadlyBackflipSkill_Ocean(SkillBuilder<? extends WeaponInnateSkill> builder) {
         super(builder);
         this.first = RapierAnimations.DEADLYBACKFLIP_FIRST;
-        this.second = RapierAnimations.DEADLYBACKFLIP_SECOND_AMETHYST;
+        this.second = RapierAnimations.DEADLYBACKFLIP_SECOND_OCEAN;
         this.fail = RapierAnimations.DEADLYBACKFLIP_FAIL;
     }
 
@@ -78,7 +78,7 @@ public class DeadlyBackflipSkill_AmethystSkill extends WeaponInnateSkill {
     public List<Component> getTooltipOnItem(ItemStack itemStack, CapabilityItem cap, PlayerPatch<?> playerCap) {
         List<Component> list = super.getTooltipOnItem(itemStack, cap, playerCap);
         this.generateTooltipforPhase(list, itemStack, cap, playerCap, (Map) this.properties.get(0), "Kick:");
-        this.generateTooltipforPhase(list, itemStack, cap, playerCap, (Map) this.properties.get(1), "Crystal:");
+        this.generateTooltipforPhase(list, itemStack, cap, playerCap, (Map) this.properties.get(1), "Flow:");
         return list;
     }
 

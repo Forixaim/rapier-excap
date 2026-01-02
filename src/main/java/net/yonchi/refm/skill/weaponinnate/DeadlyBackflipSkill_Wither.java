@@ -25,13 +25,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class DeadlyBackflipSkill_WitherSkill extends WeaponInnateSkill {
+public class DeadlyBackflipSkill_Wither extends WeaponInnateSkill {
     private static final UUID EVENT_UUID = UUID.fromString("1f6aea85-2194-4761-af8e-1a5c99c4f345");
     public final AssetAccessor<? extends AttackAnimation> first;
     public final AssetAccessor<? extends AttackAnimation> second;
     public final AssetAccessor<? extends AttackAnimation> fail;
 
-    public DeadlyBackflipSkill_WitherSkill(SkillBuilder<? extends WeaponInnateSkill> builder) {
+    public DeadlyBackflipSkill_Wither(SkillBuilder<? extends WeaponInnateSkill> builder) {
         super(builder);
         this.first = RapierAnimations.DEADLYBACKFLIP_FIRST;
         this.second = RapierAnimations.DEADLYBACKFLIP_SECOND_WITHER;

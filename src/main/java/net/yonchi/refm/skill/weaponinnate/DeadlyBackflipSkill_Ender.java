@@ -25,13 +25,13 @@ import yesman.epicfight.world.capabilities.item.CapabilityItem;
 import yesman.epicfight.world.effect.EpicFightMobEffects;
 import yesman.epicfight.world.entity.eventlistener.PlayerEventListener.EventType;
 
-public class DeadlyBackflip_EnderSkill extends WeaponInnateSkill {
+public class DeadlyBackflipSkill_Ender extends WeaponInnateSkill {
     private static final UUID EVENT_UUID = UUID.fromString("1f6aea85-2194-4761-af8e-1a5c99c4f415");
     public final AssetAccessor<? extends AttackAnimation> first;
     public final AssetAccessor<? extends AttackAnimation> second;
     public final AssetAccessor<? extends AttackAnimation> fail;
 
-    public DeadlyBackflip_EnderSkill(SkillBuilder<? extends WeaponInnateSkill> builder) {
+    public DeadlyBackflipSkill_Ender(SkillBuilder<? extends WeaponInnateSkill> builder) {
         super(builder);
         this.first = RapierAnimations.DEADLYBACKFLIP_FIRST;
         this.second = RapierAnimations.DEADLYBACKFLIP_SECOND_ENDER;

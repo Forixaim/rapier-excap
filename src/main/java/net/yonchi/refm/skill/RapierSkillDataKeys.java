@@ -26,9 +26,9 @@ public class RapierSkillDataKeys {
     }
     static{
         COMBO_COUNTER = DATA_KEYS.register("combo_counter", () ->
-                SkillDataKey.createSkillDataKey(PacketBufferCodec.INTEGER, 0, false, DeadlyBackflipSkill.class, DeadlyBackflip_EnderSkill.class, DeadlyBackflipSkill_OceanSkill.class, DeadlyBackflipSkill_WitherSkill.class, DeadlyBackflipSkill_AmethystSkill.class));
+                SkillDataKey.createSkillDataKey(PacketBufferCodec.INTEGER, 0, false, DeadlyBackflipSkill.class, DeadlyBackflipSkill_Ender.class, DeadlyBackflipSkill_Ocean.class, DeadlyBackflipSkill_Wither.class, DeadlyBackflipSkill_Amethyst.class));
         LAST_HIT_COUNT = DATA_KEYS.register("last_hit_count", () ->
-                SkillDataKey.createSkillDataKey(PacketBufferCodec.INTEGER, 0, false, DeadlyBackflipSkill.class, DeadlyBackflip_EnderSkill.class, DeadlyBackflipSkill_OceanSkill.class, DeadlyBackflipSkill_WitherSkill.class, DeadlyBackflipSkill_AmethystSkill.class));
+                SkillDataKey.createSkillDataKey(PacketBufferCodec.INTEGER, 0, false, DeadlyBackflipSkill.class, DeadlyBackflipSkill_Ender.class, DeadlyBackflipSkill_Ocean.class, DeadlyBackflipSkill_Wither.class, DeadlyBackflipSkill_Amethyst.class));
         PENALTY_RESTORE_COUNTER = DATA_KEYS.register("penalty_restore_counter", () ->
                 SkillDataKey.createSkillDataKey(PacketBufferCodec.INTEGER, 0, false, RapierCompatSkills.class, AmethystCompatSkills.class));
         PENALTY = DATA_KEYS.register("penalty", () ->
