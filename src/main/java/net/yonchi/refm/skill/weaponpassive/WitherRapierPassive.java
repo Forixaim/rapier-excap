@@ -32,14 +32,16 @@ public class WitherRapierPassive extends PassiveSkill {
     @Override
     public void onInitiate(SkillContainer container, EntityEventListener eventListener) {
         super.onInitiate(container, eventListener);
-        eventListener.registerEvent(EpicFightEventHooks.Entity.DELIVER_DAMAGE_PRE, (event) -> {
-            LivingEntity entity = event.getTarget();
-                int duration = 33;
-                int amplifier = entity instanceof Player ? 0 : 2;
-
-                MobEffectInstance witherEffect =
-                        new MobEffectInstance(MobEffects.WITHER, duration, amplifier, false, false);
-                entity.addEffect(witherEffect);
+        eventListener.registerEvent(EpicFightEventHooks.Animation.BEGIN, (anim) -> {
+            if (!RapierAnimations.DEADLYBACKFLIP_FIRST.equals(anim.getAnimation())) {
+                eventListener.registerEvent(EpicFightEventHooks.Entity.DELIVER_DAMAGE_POST, (event) -> {
+                    LivingEntity entity = event.getTarget();
+                    int amplifier = entity instanceof Player ? 0 : 2;
+                    MobEffectInstance witherEffect =
+                            new MobEffectInstance(MobEffects.WITHER, 33, amplifier, false, false);
+                    entity.addEffect(witherEffect);
+                }, this);
+            }
         }, this);
 
 

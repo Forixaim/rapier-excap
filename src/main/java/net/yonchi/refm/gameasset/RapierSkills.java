@@ -16,7 +16,7 @@ import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.property.AnimationProperty.AttackPhaseProperty;
 import yesman.epicfight.api.utils.math.ValueModifier;
 import yesman.epicfight.registry.EpicFightRegistries;
-import yesman.epicfight.skill.passive.PassiveSkill;
+import yesman.epicfight.skill.SkillCategories;
 import yesman.epicfight.skill.weaponinnate.WeaponInnateSkill;
 import yesman.epicfight.skill.Skill;
 import yesman.epicfight.world.damagesource.EpicFightDamageTypeTags;
@@ -29,7 +29,7 @@ public class RapierSkills {
     public static final DeferredRegister<Skill> REGISTRY = DeferredRegister.create(EpicFightRegistries.Keys.SKILL, RapierForEpicfight.MOD_ID);
 
     public static final DeferredHolder <Skill, DeadlyBackflipSkill> DEADLYBACKFLIP = REGISTRY.register("deadlybackflip", key ->
-            WeaponInnateSkill.createWeaponInnateBuilder(DeadlyBackflipSkill::new)
+            WeaponInnateSkill.createWeaponInnateBuilder(DeadlyBackflipSkill::new).setCategory(SkillCategories.WEAPON_INNATE)
             .newProperty()
                     .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
                     .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.adder(6))
@@ -39,7 +39,7 @@ public class RapierSkills {
                     .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE))
             .newProperty()
                     .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(1))
-                    .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.adder(12))
+                    .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.adder(12F))
                     .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.KNOCKDOWN)
                     .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.adder(8))
                     .addProperty(AttackPhaseProperty.EXTRA_DAMAGE, Set.of(ExtraDamageInstance.SWEEPING_EDGE_ENCHANTMENT.create()))
@@ -48,7 +48,7 @@ public class RapierSkills {
     );
 
     public static final DeferredHolder <Skill, DeadlyBackflipSkill_Ender> DEADLYBACKFLIP_ENDER = REGISTRY.register("deadlybackflip_ender", key ->
-            WeaponInnateSkill.createWeaponInnateBuilder(DeadlyBackflipSkill_Ender::new)
+            WeaponInnateSkill.createWeaponInnateBuilder(DeadlyBackflipSkill_Ender::new).setCategory(SkillCategories.WEAPON_INNATE)
             .newProperty()
                     .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
                     .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.adder(6))
@@ -72,7 +72,7 @@ public class RapierSkills {
 
 
     public static final DeferredHolder <Skill, DeadlyBackflipSkill_Ocean> DEADLYBACKFLIP_OCEAN = REGISTRY.register("deadlybackflip_ocean", key ->
-            WeaponInnateSkill.createWeaponInnateBuilder(DeadlyBackflipSkill_Ocean::new)
+            WeaponInnateSkill.createWeaponInnateBuilder(DeadlyBackflipSkill_Ocean::new).setCategory(SkillCategories.WEAPON_INNATE)
             .newProperty()
                     .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
                     .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.adder(6))
@@ -91,7 +91,7 @@ public class RapierSkills {
     );
 
     public static final DeferredHolder <Skill, DeadlyBackflipSkill_Wither> DEADLYBACKFLIP_WITHER = REGISTRY.register("deadlybackflip_wither", key ->
-            WeaponInnateSkill.createWeaponInnateBuilder(DeadlyBackflipSkill_Wither::new)
+            WeaponInnateSkill.createWeaponInnateBuilder(DeadlyBackflipSkill_Wither::new).setCategory(SkillCategories.WEAPON_INNATE)
             .newProperty()
                     .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
                     .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.adder(6))
@@ -115,7 +115,7 @@ public class RapierSkills {
     );
 
     public static final DeferredHolder <Skill, DeadlyBackflipSkill_Amethyst> DEADLYBACKFLIP_AMETHYST = REGISTRY.register("deadlybackflip_amethyst", key ->
-            WeaponInnateSkill.createWeaponInnateBuilder(DeadlyBackflipSkill_Amethyst::new)
+            WeaponInnateSkill.createWeaponInnateBuilder(DeadlyBackflipSkill_Amethyst::new).setCategory(SkillCategories.WEAPON_INNATE)
             .newProperty()
                     .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
                     .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.adder(6))
@@ -132,17 +132,17 @@ public class RapierSkills {
                     .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE, EpicFightDamageTypeTags.FINISHER))
                     .build(key)
     );
-
+/*
+Builder fixed by M6FGR
+*/
     public static final DeferredHolder <Skill, EnderRapierPassive> ENDER_PASSIVE = REGISTRY.register("ender_passive", key ->
-            PassiveSkill.createPassiveBuilder(EnderRapierPassive::new).setActivateType(Skill.ActivateType.TOGGLE).build(key)
+            EnderRapierPassive.createBuilder(EnderRapierPassive::new).setCategory(SkillCategories.WEAPON_PASSIVE).setActivateType(Skill.ActivateType.TOGGLE).build(key)
     );
-
     public static final DeferredHolder <Skill, OceanRapierPassive> OCEAN_PASSIVE = REGISTRY.register("ocean_passive", key ->
-            PassiveSkill.createPassiveBuilder(OceanRapierPassive::new).setActivateType(Skill.ActivateType.DURATION_INFINITE).build(key)
+            OceanRapierPassive.createBuilder(OceanRapierPassive::new).setCategory(SkillCategories.WEAPON_PASSIVE).setActivateType(Skill.ActivateType.DURATION_INFINITE).build(key)
     );
-
     public static final DeferredHolder <Skill, WitherRapierPassive> WITHER_PASSIVE = REGISTRY.register("wither_passive", key ->
-            PassiveSkill.createPassiveBuilder(WitherRapierPassive::new).setActivateType(Skill.ActivateType.ONE_SHOT).build(key)
+            WitherRapierPassive.createBuilder(WitherRapierPassive::new).setCategory(SkillCategories.WEAPON_PASSIVE).setActivateType(Skill.ActivateType.ONE_SHOT).build(key)
     );
 }
 //https://github.com/Epic-Fight/epicfight/blob/1.21.1/src/main/java/yesman/epicfight/registry/entries/EpicFightSkills.java

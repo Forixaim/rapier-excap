@@ -33,10 +33,9 @@ public class EnderRapierPassive extends PassiveSkill {
                     if (player == null || !player.isAlive()) return;
                     long currentTime = System.currentTimeMillis();
                     if (currentTime - lastTeleportTime < COOLDOWN_TIME) {
-                        event.isCanceled();
-                        teleportToSafeLocation(player);
+                        return;
                     } else {
-                        event.isCanceled();
+                        event.cancel();
                         teleportToSafeLocation(player);
                     }
                 },
