@@ -1,0 +1,33 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="All Rights Reserved"
+
+[[mods]]
+modId="refm"
+version="0.3.6-1.21.1"
+displayName="Rapier For EpicFightMod"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/epic-fight-mod-rapier-moveset-addon"
+logoFile="refm_logo.png"
+authors="Yonchi"
+description='''This is an addon for EpicFightMod that adds a Rapier moveset to the game.'''
+
+[[dependencies.refm]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neo_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.refm]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.refm]]
+    modId="epicfight"
+    mandatory=true
+    versionRange="[21.15.1,)"
+    ordering="AFTER"
+    side="BOTH"

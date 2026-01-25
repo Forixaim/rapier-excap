@@ -10,44 +10,38 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
+import yesman.epicfight.api.event.EntityEventListener;
+import yesman.epicfight.api.event.EpicFightEventHooks;
 import yesman.epicfight.skill.SkillBuilder;
 import yesman.epicfight.skill.SkillContainer;
 import yesman.epicfight.skill.passive.PassiveSkill;
-import yesman.epicfight.world.entity.eventlistener.PlayerEventListener;
 
-import java.util.UUID;
 import java.util.Random;
 
 public class EnderRapierPassive extends PassiveSkill {
-    private static final UUID EVENT_UUID = UUID.fromString("06542d5a-7b38-4db8-9959-fa6a4f6cbbc0");
+    public EnderRapierPassive(SkillBuilder<?> builder) {
+        super(builder);
+    }
     private long lastTeleportTime = 0;
     private static final long COOLDOWN_TIME = 3600;
 
-    public EnderRapierPassive(SkillBuilder<? extends PassiveSkill> builder) {
-        super(builder);
-    }
-
     @Override
-    public void onInitiate(SkillContainer container) {
-        super.onInitiate(container);
-        container.getExecutor().getEventListener().addEventListener(PlayerEventListener.EventType.PROJECTILE_HIT_EVENT, EVENT_UUID, (event) -> {
-            LivingEntity target = event.getPlayerPatch().getOriginal();
-            if (target == null || !target.isAlive()) return;
-
-            long currentTime = System.currentTimeMillis();
-            if (currentTime - lastTeleportTime < COOLDOWN_TIME) {
-                event.setCanceled(false);
-            } else {
-                event.setCanceled(true);
-                teleportToSafeLocation(target);
-            }
-        });
-    }
-
-    @Override
-    public void onRemoved(SkillContainer container) {
-        PlayerEventListener listener = container.getExecutor().getEventListener();
-        listener.removeListener(PlayerEventListener.EventType.PROJECTILE_HIT_EVENT, EVENT_UUID);
+    public void onInitiate(SkillContainer container, EntityEventListener eventListener) {
+        super.onInitiate(container, eventListener);
+        eventListener.registerEvent(EpicFightEventHooks.Entity.HIT_BY_PROJECTILE, (event) -> {
+                    LivingEntity player = container.getExecutor().getOriginal();
+                    if (player == null || !player.isAlive()) return;
+                    long currentTime = System.currentTimeMillis();
+                    if (currentTime - lastTeleportTime < COOLDOWN_TIME) {
+                        event.isCanceled();
+                        teleportToSafeLocation(player);
+                    } else {
+                        event.isCanceled();
+                        teleportToSafeLocation(player);
+                    }
+                },
+                this
+        );
     }
 
     private void teleportToSafeLocation(LivingEntity entity) {

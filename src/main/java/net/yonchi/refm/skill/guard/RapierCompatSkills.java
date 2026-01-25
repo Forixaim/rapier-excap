@@ -2,19 +2,14 @@ package net.yonchi.refm.skill.guard;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import net.yonchi.refm.RapierForEpicfight;
 import net.yonchi.refm.gameasset.RapierAnimations;
 import net.yonchi.refm.world.capabilities.item.RapierWeaponCategories;
 import net.yonchi.refm.world.item.RapierAddonItems;
 
-import yesman.epicfight.api.client.forgeevent.WeaponCategoryIconRegisterEvent;
-import yesman.epicfight.api.forgeevent.SkillBuildEvent;
-import yesman.epicfight.api.forgeevent.SkillBuildEvent.ModRegistryWorker.SkillCreateEvent;
+import yesman.epicfight.api.client.event.types.registry.RegisterWeaponCategoryIconEvent;
+import yesman.epicfight.api.event.types.registry.SkillBuilderModificationEvent;
+import yesman.epicfight.api.event.Event;
 import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.skill.guard.GuardSkill;
 import yesman.epicfight.skill.guard.ParryingSkill;
@@ -23,15 +18,10 @@ import yesman.epicfight.skill.passive.SwordmasterSkill;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = RapierForEpicfight.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class RapierCompatSkills {
-    public static void forceGuard(SkillBuildEvent bus) {
-    }
-    @SubscribeEvent
-    public static void onGuardSkillCreate(SkillCreateEvent<GuardSkill.Builder> event) {
-        System.out.println("[RapierCompatSkills] Skill being builded: " + event.getRegistryName());
+public class RapierCompatSkills extends Event{
+    public static void onGuardSkillCreate(SkillBuilderModificationEvent event) {
         if (event.getRegistryName().equals(ResourceLocation.fromNamespaceAndPath("epicfight","guard"))) {
-            GuardSkill.Builder builder = event.getSkillBuilder();
+            GuardSkill.Builder builder = (GuardSkill.Builder) event.getSkillBuilder();
             builder.addGuardMotion(RapierWeaponCategories.RAPIER, (item, player) -> {
                 return RapierAnimations.RAPIER_GUARD_HIT;
             }).addGuardMotion(RapierWeaponCategories.ENDER_RAPIER, (item, player) -> {
@@ -53,10 +43,9 @@ public class RapierCompatSkills {
         }
     }
 
-    @SubscribeEvent
-    public static void onParrySkillCreate(SkillCreateEvent<ParryingSkill.Builder> event) {
+    public static void onParrySkillCreate(SkillBuilderModificationEvent event) {
         if (event.getRegistryName().equals(ResourceLocation.fromNamespaceAndPath("epicfight","parrying"))) {
-            GuardSkill.Builder builder = event.getSkillBuilder();
+            GuardSkill.Builder builder = (ParryingSkill.Builder) event.getSkillBuilder();
             builder.addGuardMotion(RapierWeaponCategories.RAPIER, (item, player) -> {
                 return RapierAnimations.RAPIER_GUARD_HIT;
             }).addGuardMotion(RapierWeaponCategories.ENDER_RAPIER, (item, player) -> {
@@ -86,10 +75,9 @@ public class RapierCompatSkills {
         }
     }
 
-    @SubscribeEvent
-    public static void onScapeSkillCreate(SkillCreateEvent<EmergencyEscapeSkill.Builder> event) {
+    public static void onScapeSkillCreate(SkillBuilderModificationEvent event) {
         if (event.getRegistryName().equals(ResourceLocation.fromNamespaceAndPath("epicfight","emergency_escape"))) {
-            EmergencyEscapeSkill.Builder builder = event.getSkillBuilder();
+            EmergencyEscapeSkill.Builder builder = (EmergencyEscapeSkill.Builder) event.getSkillBuilder();
             builder.addAvailableWeaponCategory(RapierWeaponCategories.RAPIER)
             .addAvailableWeaponCategory(RapierWeaponCategories.ENDER_RAPIER)
             .addAvailableWeaponCategory(RapierWeaponCategories.OCEAN_RAPIER)
@@ -98,21 +86,18 @@ public class RapierCompatSkills {
         }
     }
 
-    @SubscribeEvent
-    public static void onSwordSkillCreate(SkillCreateEvent<SwordmasterSkill.Builder> event) {
+    public static void onSwordSkillCreate(SkillBuilderModificationEvent event) {
         if (event.getRegistryName().equals(ResourceLocation.fromNamespaceAndPath("epicfight","swordmaster"))) {
-            SwordmasterSkill.Builder builder = event.getSkillBuilder();
+            SwordmasterSkill.Builder builder = (SwordmasterSkill.Builder) event.getSkillBuilder();
             builder.addAvailableWeaponCategory(RapierWeaponCategories.RAPIER)
-                    .addAvailableWeaponCategory(RapierWeaponCategories.ENDER_RAPIER)
-                    .addAvailableWeaponCategory(RapierWeaponCategories.OCEAN_RAPIER)
-                    .addAvailableWeaponCategory(RapierWeaponCategories.WITHER_RAPIER);
+            .addAvailableWeaponCategory(RapierWeaponCategories.ENDER_RAPIER)
+            .addAvailableWeaponCategory(RapierWeaponCategories.OCEAN_RAPIER)
+            .addAvailableWeaponCategory(RapierWeaponCategories.WITHER_RAPIER);
             System.out.println("[RapierCompatSkills] SwordMaster has been implemented");
         }
     }
 
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public static void onIconCreate(WeaponCategoryIconRegisterEvent icon){
+    public static void onIconCreate(RegisterWeaponCategoryIconEvent icon){
         icon.registerCategory(RapierWeaponCategories.RAPIER, new ItemStack(RapierAddonItems.IRON_RAPIER.get()));
         icon.registerCategory(RapierWeaponCategories.ENDER_RAPIER, new ItemStack(RapierAddonItems.ENDERITE_RAPIER.get()));
         icon.registerCategory(RapierWeaponCategories.OCEAN_RAPIER, new ItemStack(RapierAddonItems.OCEANITE_RAPIER.get()));

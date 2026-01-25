@@ -2,9 +2,9 @@ package net.yonchi.refm.gameasset;
 
 import java.util.Set;
 
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.RegisterEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import net.yonchi.refm.RapierForEpicfight;
 import net.yonchi.refm.skill.weaponinnate.*;
@@ -14,9 +14,8 @@ import net.yonchi.refm.skill.weaponpassive.WitherRapierPassive;
 
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.property.AnimationProperty.AttackPhaseProperty;
-import yesman.epicfight.api.forgeevent.SkillBuildEvent;
 import yesman.epicfight.api.utils.math.ValueModifier;
-import yesman.epicfight.skill.SkillCategories;
+import yesman.epicfight.registry.EpicFightRegistries;
 import yesman.epicfight.skill.passive.PassiveSkill;
 import yesman.epicfight.skill.weaponinnate.WeaponInnateSkill;
 import yesman.epicfight.skill.Skill;
@@ -24,129 +23,126 @@ import yesman.epicfight.world.damagesource.EpicFightDamageTypeTags;
 import yesman.epicfight.world.damagesource.ExtraDamageInstance;
 import yesman.epicfight.world.damagesource.StunType;
 
-@Mod.EventBusSubscriber(modid = RapierForEpicfight.MOD_ID, bus= Mod.EventBusSubscriber.Bus.MOD)
 public class RapierSkills {
-    public static Skill DEADLYBACKFLIP;
-    public static Skill DEADLYBACKFLIP_ENDER;
-    public static Skill DEADLYBACKFLIP_OCEAN;
-    public static Skill DEADLYBACKFLIP_WITHER;
-    public static Skill DEADLYBACKFLIP_AMETHYST;
-    public static Skill ENDER_PASSIVE;
-    public static Skill OCEAN_PASSIVE;
-    public static Skill WITHER_PASSIVE;
+    private RapierSkills() {}
 
-    @SubscribeEvent
-    public static void buildSkillEvent(SkillBuildEvent build) {
-        SkillBuildEvent.ModRegistryWorker modRegistry = build.createRegistryWorker(RapierForEpicfight.MOD_ID);
+    public static final DeferredRegister<Skill> REGISTRY = DeferredRegister.create(EpicFightRegistries.Keys.SKILL, RapierForEpicfight.MOD_ID);
 
-        WeaponInnateSkill deadlybackflip = modRegistry.build("deadlybackflip", DeadlyBackflipSkill::new, WeaponInnateSkill.createWeaponInnateBuilder());
-        deadlybackflip
-                .newProperty()
-                .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
-                .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.adder(6))
-                .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.setter(1))
-                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
-                .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(100))
-                .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE))
-                .newProperty()
-                .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(1))
-                .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.adder(12))
-                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.KNOCKDOWN)
-                .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.adder(8))
-                .addProperty(AttackPhaseProperty.EXTRA_DAMAGE, Set.of(ExtraDamageInstance.SWEEPING_EDGE_ENCHANTMENT.create()))
-                .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE, EpicFightDamageTypeTags.FINISHER));
-        DEADLYBACKFLIP = deadlybackflip;
+    public static final DeferredHolder <Skill, DeadlyBackflipSkill> DEADLYBACKFLIP = REGISTRY.register("deadlybackflip", key ->
+            WeaponInnateSkill.createWeaponInnateBuilder(DeadlyBackflipSkill::new)
+            .newProperty()
+                    .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
+                    .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.adder(6))
+                    .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.setter(1))
+                    .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                    .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(100))
+                    .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE))
+            .newProperty()
+                    .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(1))
+                    .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.adder(12))
+                    .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.KNOCKDOWN)
+                    .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.adder(8))
+                    .addProperty(AttackPhaseProperty.EXTRA_DAMAGE, Set.of(ExtraDamageInstance.SWEEPING_EDGE_ENCHANTMENT.create()))
+                    .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE, EpicFightDamageTypeTags.FINISHER))
+                    .build(key)
+    );
 
-        WeaponInnateSkill deadlybackflip_ender = modRegistry.build("deadlybackflip_ender", DeadlyBackflipSkill_Ender::new, WeaponInnateSkill.createWeaponInnateBuilder());
-        deadlybackflip_ender
-                .newProperty()
-                .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
-                .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.adder(6))
-                .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.setter(1))
-                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
-                .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(100))
-                .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE))
-                .newProperty()
-                .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(4))
-                .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.adder(-3))
-                .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.FINISHER))
-                .newProperty()
-                .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(1))
-                .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.adder(1))
-                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.KNOCKDOWN)
-                .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(32))
-                .addProperty(AttackPhaseProperty.EXTRA_DAMAGE, Set.of(ExtraDamageInstance.SWEEPING_EDGE_ENCHANTMENT.create()))
-                .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.BYPASS_DODGE, EpicFightDamageTypeTags.FINISHER));
-        DEADLYBACKFLIP_ENDER = deadlybackflip_ender;
+    public static final DeferredHolder <Skill, DeadlyBackflipSkill_Ender> DEADLYBACKFLIP_ENDER = REGISTRY.register("deadlybackflip_ender", key ->
+            WeaponInnateSkill.createWeaponInnateBuilder(DeadlyBackflipSkill_Ender::new)
+            .newProperty()
+                    .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
+                    .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.adder(6))
+                    .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.setter(1))
+                    .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                    .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(100))
+                    .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE))
+            .newProperty()
+                    .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(4))
+                    .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.adder(-3))
+                    .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.FINISHER))
+            .newProperty()
+                    .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(1))
+                    .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.adder(1))
+                    .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.KNOCKDOWN)
+                    .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(32))
+                    .addProperty(AttackPhaseProperty.EXTRA_DAMAGE, Set.of(ExtraDamageInstance.SWEEPING_EDGE_ENCHANTMENT.create()))
+                    .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.BYPASS_DODGE, EpicFightDamageTypeTags.FINISHER))
+                    .build(key)
+    );
 
-        WeaponInnateSkill deadlybackflip_ocean = modRegistry.build("deadlybackflip_ocean", DeadlyBackflipSkill_Ocean::new, WeaponInnateSkill.createWeaponInnateBuilder());
-        deadlybackflip_ocean
-                .newProperty()
-                .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
-                .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.adder(6))
-                .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.setter(1))
-                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
-                .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(100))
-                .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE))
-                .newProperty()
-                .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(1))
-                .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.adder(12))
-                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.KNOCKDOWN)
-                .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.adder(42))
-                .addProperty(AttackPhaseProperty.EXTRA_DAMAGE, Set.of(ExtraDamageInstance.SWEEPING_EDGE_ENCHANTMENT.create()))
-                .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE, EpicFightDamageTypeTags.FINISHER));
-        DEADLYBACKFLIP_OCEAN = deadlybackflip_ocean;
 
-        WeaponInnateSkill deadlybackflip_wither = modRegistry.build("deadlybackflip_wither", DeadlyBackflipSkill_Wither::new, WeaponInnateSkill.createWeaponInnateBuilder());
-        deadlybackflip_wither
-                .newProperty()
-                .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
-                .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.adder(6))
-                .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.setter(1))
-                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
-                .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(100))
-                .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE))
-                .newProperty()
-                .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(1))
-                .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.adder(-6))
-                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
-                .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.BYPASS_DODGE, EpicFightDamageTypeTags.FINISHER))
-                .newProperty()
-                .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(1))
-                .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.adder(0))
-                .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(36))
-                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.KNOCKDOWN)
-                .addProperty(AttackPhaseProperty.EXTRA_DAMAGE, Set.of(ExtraDamageInstance.SWEEPING_EDGE_ENCHANTMENT.create()))
-                .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.BYPASS_DODGE, EpicFightDamageTypeTags.FINISHER));
-        DEADLYBACKFLIP_WITHER = deadlybackflip_wither;
+    public static final DeferredHolder <Skill, DeadlyBackflipSkill_Ocean> DEADLYBACKFLIP_OCEAN = REGISTRY.register("deadlybackflip_ocean", key ->
+            WeaponInnateSkill.createWeaponInnateBuilder(DeadlyBackflipSkill_Ocean::new)
+            .newProperty()
+                    .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
+                    .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.adder(6))
+                    .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.setter(1))
+                    .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                    .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(100))
+                    .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE))
+            .newProperty()
+                    .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(1))
+                    .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.adder(12))
+                    .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.KNOCKDOWN)
+                    .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.adder(42))
+                    .addProperty(AttackPhaseProperty.EXTRA_DAMAGE, Set.of(ExtraDamageInstance.SWEEPING_EDGE_ENCHANTMENT.create()))
+                    .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE, EpicFightDamageTypeTags.FINISHER))
+                    .build(key)
+    );
 
-        WeaponInnateSkill deadlybackflip_amethyst = modRegistry.build("deadlybackflip_amethyst", DeadlyBackflipSkill_Amethyst::new, WeaponInnateSkill.createWeaponInnateBuilder());
-        deadlybackflip_amethyst
-                .newProperty()
-                .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
-                .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.adder(6))
-                .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.setter(1))
-                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
-                .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(100))
-                .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE))
-                .newProperty()
-                .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(1))
-                .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.adder(12))
-                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.NEUTRALIZE)
-                .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.adder(32))
-                .addProperty(AttackPhaseProperty.EXTRA_DAMAGE, Set.of(ExtraDamageInstance.SWEEPING_EDGE_ENCHANTMENT.create()))
-                .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE, EpicFightDamageTypeTags.FINISHER));
-        DEADLYBACKFLIP_AMETHYST = deadlybackflip_amethyst;
+    public static final DeferredHolder <Skill, DeadlyBackflipSkill_Wither> DEADLYBACKFLIP_WITHER = REGISTRY.register("deadlybackflip_wither", key ->
+            WeaponInnateSkill.createWeaponInnateBuilder(DeadlyBackflipSkill_Wither::new)
+            .newProperty()
+                    .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
+                    .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.adder(6))
+                    .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.setter(1))
+                    .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                    .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(100))
+                    .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE))
+            .newProperty()
+                    .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(1))
+                    .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.adder(-6))
+                    .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
+                    .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.BYPASS_DODGE, EpicFightDamageTypeTags.FINISHER))
+            .newProperty()
+                    .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(1))
+                    .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.adder(0))
+                    .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(36))
+                    .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.KNOCKDOWN)
+                    .addProperty(AttackPhaseProperty.EXTRA_DAMAGE, Set.of(ExtraDamageInstance.SWEEPING_EDGE_ENCHANTMENT.create()))
+                    .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.BYPASS_DODGE, EpicFightDamageTypeTags.FINISHER))
+                    .build(key)
+    );
 
-        ENDER_PASSIVE = modRegistry.build("ender_passive", EnderRapierPassive::new, PassiveSkill.createPassiveBuilder().setCategory(SkillCategories.WEAPON_PASSIVE).setResource(Skill.Resource.STAMINA).setActivateType(Skill.ActivateType.TOGGLE));
-        OCEAN_PASSIVE = modRegistry.build("ocean_passive", OceanRapierPassive::new, PassiveSkill.createPassiveBuilder().setCategory(SkillCategories.WEAPON_PASSIVE).setActivateType(Skill.ActivateType.DURATION_INFINITE));
-        WITHER_PASSIVE = modRegistry.build("wither_passive", WitherRapierPassive::new, PassiveSkill.createPassiveBuilder().setCategory(SkillCategories.WEAPON_PASSIVE).setActivateType(Skill.ActivateType.ONE_SHOT));
-    }
+    public static final DeferredHolder <Skill, DeadlyBackflipSkill_Amethyst> DEADLYBACKFLIP_AMETHYST = REGISTRY.register("deadlybackflip_amethyst", key ->
+            WeaponInnateSkill.createWeaponInnateBuilder(DeadlyBackflipSkill_Amethyst::new)
+            .newProperty()
+                    .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(1))
+                    .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.adder(6))
+                    .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.setter(1))
+                    .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                    .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(100))
+                    .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE))
+            .newProperty()
+                    .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(1))
+                    .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.adder(12))
+                    .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.NEUTRALIZE)
+                    .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.adder(32))
+                    .addProperty(AttackPhaseProperty.EXTRA_DAMAGE, Set.of(ExtraDamageInstance.SWEEPING_EDGE_ENCHANTMENT.create()))
+                    .addProperty(AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.WEAPON_INNATE, EpicFightDamageTypeTags.GUARD_PUNCTURE, EpicFightDamageTypeTags.FINISHER))
+                    .build(key)
+    );
 
-    public RapierSkills(){
-    }
-    public static void registerRapierSkills(RegisterEvent bus) {
-    }
+    public static final DeferredHolder <Skill, EnderRapierPassive> ENDER_PASSIVE = REGISTRY.register("ender_passive", key ->
+            PassiveSkill.createPassiveBuilder(EnderRapierPassive::new).setActivateType(Skill.ActivateType.TOGGLE).build(key)
+    );
+
+    public static final DeferredHolder <Skill, OceanRapierPassive> OCEAN_PASSIVE = REGISTRY.register("ocean_passive", key ->
+            PassiveSkill.createPassiveBuilder(OceanRapierPassive::new).setActivateType(Skill.ActivateType.DURATION_INFINITE).build(key)
+    );
+
+    public static final DeferredHolder <Skill, WitherRapierPassive> WITHER_PASSIVE = REGISTRY.register("wither_passive", key ->
+            PassiveSkill.createPassiveBuilder(WitherRapierPassive::new).setActivateType(Skill.ActivateType.ONE_SHOT).build(key)
+    );
 }
-
-    //https://github.com/Yesssssman/epicfightmod/blob/1.20.1/src/main/java/yesman/epicfight/gameasset/EpicFightSkills.java#L108
+//https://github.com/Epic-Fight/epicfight/blob/1.21.1/src/main/java/yesman/epicfight/registry/entries/EpicFightSkills.java

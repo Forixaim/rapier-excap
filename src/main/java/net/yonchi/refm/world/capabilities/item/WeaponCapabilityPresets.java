@@ -1,28 +1,23 @@
 package net.yonchi.refm.world.capabilities.item;
 
-
-import java.util.Map;
-import java.util.function.Function;
-
-import com.google.common.collect.Maps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+
+import net.neoforged.bus.api.SubscribeEvent;
 
 import net.yonchi.refm.RapierForEpicfight;
 import net.yonchi.refm.gameasset.*;
 
-import yesman.epicfight.api.forgeevent.WeaponCapabilityPresetRegistryEvent;
 import yesman.epicfight.api.animation.LivingMotions;
-import yesman.epicfight.world.capabilities.item.CapabilityItem;
-import yesman.epicfight.world.capabilities.item.CapabilityItem.Styles;
+import yesman.epicfight.api.event.EpicFightEventHooks;
 import yesman.epicfight.world.capabilities.item.WeaponCapability;
+import yesman.epicfight.world.capabilities.item.CapabilityItem.Styles;
 
-@Mod.EventBusSubscriber(modid = RapierForEpicfight.MOD_ID , bus = Mod.EventBusSubscriber.Bus.MOD)
+import java.util.function.Function;
+
 public class WeaponCapabilityPresets {
-    public static final Function<Item, CapabilityItem.Builder> RAPIER = (item) -> {
+    public static final Function<Item, WeaponCapability.Builder> RAPIER = (item) -> {
         WeaponCapability.Builder builder = WeaponCapability.builder()
                 .category(RapierWeaponCategories.RAPIER) // Updated to use custom category
                 .styleProvider((playerpatch) -> Styles.OCHS)
@@ -31,7 +26,7 @@ public class WeaponCapabilityPresets {
                 .hitSound(RapierSounds.RAPIER_HIT.get())
                 .canBePlacedOffhand(true)
                 .newStyleCombo(Styles.OCHS, RapierAnimations.RAPIER_AUTO1, RapierAnimations.RAPIER_AUTO2, RapierAnimations.RAPIER_AUTO3, RapierAnimations.RAPIER_DASH, RapierAnimations.RAPIER_AIR_SLASH)
-                .innateSkill(Styles.OCHS, (itemstack) -> RapierSkills.DEADLYBACKFLIP)
+                .innateSkill(Styles.OCHS, (itemstack) -> RapierSkills.DEADLYBACKFLIP.get())
                 .livingMotionModifier(Styles.OCHS, LivingMotions.IDLE, RapierAnimations.BIPED_HOLD_RAPIER)
                 .livingMotionModifier(Styles.OCHS, LivingMotions.WALK, RapierAnimations.BIPED_WALK_RAPIER)
                 .livingMotionModifier(Styles.OCHS, LivingMotions.CHASE, RapierAnimations.BIPED_WALK_RAPIER)
@@ -44,7 +39,7 @@ public class WeaponCapabilityPresets {
 
         return builder;
     };
-    public static final Function<Item, CapabilityItem.Builder> ENDER_RAPIER = (item) -> {
+    public static final Function<Item, WeaponCapability.Builder> ENDER_RAPIER = (item) -> {
         WeaponCapability.Builder builder = WeaponCapability.builder()
                 .category(RapierWeaponCategories.ENDER_RAPIER) // Updated to use custom category
                 .styleProvider((playerpatch) -> Styles.OCHS)
@@ -53,8 +48,8 @@ public class WeaponCapabilityPresets {
                 .hitSound(RapierSounds.RAPIER_HIT.get())
                 .canBePlacedOffhand(true)
                 .newStyleCombo(Styles.OCHS, RapierAnimations.RAPIER_AUTO1, RapierAnimations.RAPIER_AUTO2_ENDER, RapierAnimations.RAPIER_AUTO3_ENDER, RapierAnimations.RAPIER_DASH_ENDER, RapierAnimations.RAPIER_AIR_SLASH_ENDER)
-                .innateSkill(Styles.OCHS, (itemstack) -> RapierSkills.DEADLYBACKFLIP_ENDER)
-                .passiveSkill(RapierSkills.ENDER_PASSIVE)
+                .innateSkill(Styles.OCHS, (itemstack) -> RapierSkills.DEADLYBACKFLIP_ENDER.get())
+                .passiveSkill(RapierSkills.ENDER_PASSIVE.get())
                 .livingMotionModifier(Styles.OCHS, LivingMotions.IDLE, RapierAnimations.BIPED_HOLD_RAPIER)
                 .livingMotionModifier(Styles.OCHS, LivingMotions.WALK, RapierAnimations.BIPED_WALK_RAPIER)
                 .livingMotionModifier(Styles.OCHS, LivingMotions.CHASE, RapierAnimations.BIPED_WALK_RAPIER)
@@ -67,7 +62,7 @@ public class WeaponCapabilityPresets {
 
         return builder;
     };
-    public static final Function<Item, CapabilityItem.Builder> OCEAN_RAPIER = (item) -> {
+    public static final Function<Item, WeaponCapability.Builder> OCEAN_RAPIER = (item) -> {
         WeaponCapability.Builder builder = WeaponCapability.builder()
                 .category(RapierWeaponCategories.OCEAN_RAPIER) // Updated to use custom category
                 .styleProvider((playerpatch) -> Styles.OCHS)
@@ -76,8 +71,8 @@ public class WeaponCapabilityPresets {
                 .hitSound(SoundEvents.FISH_SWIM)
                 .canBePlacedOffhand(true)
                 .newStyleCombo(Styles.OCHS, RapierAnimations.RAPIER_AUTO1, RapierAnimations.RAPIER_AUTO2_OCEAN, RapierAnimations.RAPIER_AUTO3_OCEAN, RapierAnimations.RAPIER_DASH_OCEAN, RapierAnimations.RAPIER_AIR_SLASH_OCEAN)
-                .innateSkill(Styles.OCHS, (itemstack) -> RapierSkills.DEADLYBACKFLIP_OCEAN)
-                .passiveSkill(RapierSkills.OCEAN_PASSIVE)
+                .innateSkill(Styles.OCHS, (itemstack) -> RapierSkills.DEADLYBACKFLIP_OCEAN.get())
+                .passiveSkill(RapierSkills.OCEAN_PASSIVE.get())
                 .livingMotionModifier(Styles.OCHS, LivingMotions.IDLE, RapierAnimations.BIPED_HOLD_RAPIER)
                 .livingMotionModifier(Styles.OCHS, LivingMotions.WALK, RapierAnimations.BIPED_WALK_RAPIER)
                 .livingMotionModifier(Styles.OCHS, LivingMotions.CHASE, RapierAnimations.BIPED_WALK_RAPIER)
@@ -90,7 +85,7 @@ public class WeaponCapabilityPresets {
 
         return builder;
     };
-    public static final Function<Item, CapabilityItem.Builder> WITHER_RAPIER = (item) -> {
+    public static final Function<Item, WeaponCapability.Builder> WITHER_RAPIER = (item) -> {
         WeaponCapability.Builder builder = WeaponCapability.builder()
                 .category(RapierWeaponCategories.WITHER_RAPIER) // Updated to use custom category
                 .styleProvider((playerpatch) -> Styles.OCHS)
@@ -99,8 +94,8 @@ public class WeaponCapabilityPresets {
                 .hitSound(RapierSounds.RAPIER_WITHER_HIT.get())
                 .canBePlacedOffhand(true)
                 .newStyleCombo(Styles.OCHS, RapierAnimations.RAPIER_AUTO1, RapierAnimations.RAPIER_AUTO2_WITHER, RapierAnimations.RAPIER_AUTO3_WITHER, RapierAnimations.RAPIER_DASH_WITHER, RapierAnimations.RAPIER_AIR_SLASH_WITHER)
-                .innateSkill(Styles.OCHS, (itemstack) -> RapierSkills.DEADLYBACKFLIP_WITHER)
-                .passiveSkill(RapierSkills.WITHER_PASSIVE)
+                .innateSkill(Styles.OCHS, (itemstack) -> RapierSkills.DEADLYBACKFLIP_WITHER.get())
+                .passiveSkill(RapierSkills.WITHER_PASSIVE.get())
                 .livingMotionModifier(Styles.OCHS, LivingMotions.IDLE, RapierAnimations.BIPED_HOLD_RAPIER)
                 .livingMotionModifier(Styles.OCHS, LivingMotions.WALK, RapierAnimations.BIPED_WALK_RAPIER)
                 .livingMotionModifier(Styles.OCHS, LivingMotions.CHASE, RapierAnimations.BIPED_WALK_RAPIER)
@@ -113,7 +108,7 @@ public class WeaponCapabilityPresets {
 
         return builder;
     };
-    public static final Function<Item, CapabilityItem.Builder> AMETHYST_RAPIER = (item) -> {
+    public static final Function<Item, WeaponCapability.Builder> AMETHYST_RAPIER = (item) -> {
         WeaponCapability.Builder builder = WeaponCapability.builder()
                 .category(RapierWeaponCategories.AMETHYST_RAPIER) // Updated to use custom category
                 .styleProvider((playerpatch) -> Styles.OCHS)
@@ -122,7 +117,7 @@ public class WeaponCapabilityPresets {
                 .hitSound(SoundEvents.AMETHYST_BLOCK_HIT)
                 .canBePlacedOffhand(true)
                 .newStyleCombo(Styles.OCHS, RapierAnimations.RAPIER_AUTO1, RapierAnimations.RAPIER_AUTO2_AMETHYST, RapierAnimations.RAPIER_AUTO3_AMETHYST, RapierAnimations.RAPIER_DASH_AMETHYST, RapierAnimations.RAPIER_AIR_SLASH_AMETHYST)
-                .innateSkill(Styles.OCHS, (itemstack) -> RapierSkills.DEADLYBACKFLIP_AMETHYST)
+                .innateSkill(Styles.OCHS, (itemstack) -> RapierSkills.DEADLYBACKFLIP_AMETHYST.get())
                 .livingMotionModifier(Styles.OCHS, LivingMotions.IDLE, RapierAnimations.BIPED_HOLD_RAPIER)
                 .livingMotionModifier(Styles.OCHS, LivingMotions.WALK, RapierAnimations.BIPED_WALK_RAPIER)
                 .livingMotionModifier(Styles.OCHS, LivingMotions.CHASE, RapierAnimations.BIPED_WALK_RAPIER)
@@ -136,13 +131,14 @@ public class WeaponCapabilityPresets {
         return builder;
     };
 
-    @SubscribeEvent
-    public static void registerMovesets(WeaponCapabilityPresetRegistryEvent event) {
-        event.getTypeEntry().put(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID,"rapier"), RAPIER);
-        event.getTypeEntry().put(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID,"ender_rapier"), ENDER_RAPIER);
-        event.getTypeEntry().put(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID,"ocean_rapier"), OCEAN_RAPIER);
-        event.getTypeEntry().put(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID,"wither_rapier"), WITHER_RAPIER);
-        event.getTypeEntry().put(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID,"amethyst_rapier"), AMETHYST_RAPIER);
+    public static void registerMovesets() {
+        EpicFightEventHooks.Registry.WEAPON_CAPABILITY_PRESET.registerEvent(event -> {
+            event.getTypeEntry().put(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID, "rapier"), RAPIER);
+            event.getTypeEntry().put(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID, "ender_rapier"), ENDER_RAPIER);
+            event.getTypeEntry().put(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID, "ocean_rapier"), OCEAN_RAPIER);
+            event.getTypeEntry().put(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID, "wither_rapier"), WITHER_RAPIER);
+            event.getTypeEntry().put(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID, "amethyst_rapier"), AMETHYST_RAPIER);
+        });
     }
 }
-//https://github.com/Yesssssman/epicfightmod/blob/1.20.1/src/main/java/yesman/epicfight/world/capabilities/item/WeaponCapabilityPresets.java
+//https://github.com/Epic-Fight/epicfight/blob/1.21.1/src/main/java/yesman/epicfight/world/capabilities/item/WeaponCapabilityPresets.java

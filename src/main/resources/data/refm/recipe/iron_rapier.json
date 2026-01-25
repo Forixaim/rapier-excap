@@ -8,13 +8,13 @@
     ],
     "key":
     {
-        "N": { "item" : "minecraft:gold_nugget" },
-        "B": { "item" : "minecraft:gold_ingot" },
+        "N": { "item" : "minecraft:iron_nugget" },
+        "B": { "item" : "minecraft:iron_ingot" },
         "S": { "item" : "minecraft:stick" }
     },
     "result":
     {
-        "item" : "refm:gold_rapier",
+        "id" : "refm:iron_rapier",
         "count" : 1
     }
 }

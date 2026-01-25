@@ -7,6 +7,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,7 +20,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
 
 import net.yonchi.refm.RapierForEpicfight;
 
@@ -37,15 +38,14 @@ import yesman.epicfight.api.utils.TimePairList;
 import yesman.epicfight.api.utils.math.ValueModifier;
 import yesman.epicfight.api.utils.math.Vec3f;
 import yesman.epicfight.gameasset.Armatures;
-import yesman.epicfight.gameasset.EpicFightSounds;
-import yesman.epicfight.particle.EpicFightParticles;
+import yesman.epicfight.registry.entries.EpicFightMobEffects;
+import yesman.epicfight.registry.entries.EpicFightParticles;
+import yesman.epicfight.registry.entries.EpicFightSounds;
 import yesman.epicfight.world.damagesource.EpicFightDamageTypeTags;
 import yesman.epicfight.world.damagesource.StunType;
-import yesman.epicfight.world.effect.EpicFightMobEffects;
 
 import javax.annotation.Nullable;
 
-import static io.redspace.ironsspellbooks.api.util.Utils.random;
 import static net.yonchi.refm.api.animation.JointTrack.getJointWithTranslation;
 
 public class RapierAnimations {
@@ -68,25 +68,25 @@ public class RapierAnimations {
     public static AnimationAccessor<DashAttackAnimation> RAPIER_DASH_ENDER;
     public static AnimationAccessor<DashAttackAnimation> RAPIER_DASH_OCEAN;
     public static AnimationAccessor<DashAttackAnimation> RAPIER_DASH_WITHER;
-    public static AnimationAccessor<BasicAttackAnimation> RAPIER_AUTO1;
-    public static AnimationAccessor<BasicAttackAnimation> RAPIER_AUTO2;
-    public static AnimationAccessor<BasicAttackAnimation> RAPIER_AUTO2_ENDER;
-    public static AnimationAccessor<BasicAttackAnimation> RAPIER_AUTO2_OCEAN;
-    public static AnimationAccessor<BasicAttackAnimation> RAPIER_AUTO2_WITHER;
-    public static AnimationAccessor<BasicAttackAnimation> RAPIER_AUTO3;
-    public static AnimationAccessor<BasicAttackAnimation> RAPIER_AUTO3_ENDER;
-    public static AnimationAccessor<BasicAttackAnimation> RAPIER_AUTO3_OCEAN;
-    public static AnimationAccessor<BasicAttackAnimation> RAPIER_AUTO3_WITHER;
+    public static AnimationAccessor<ComboAttackAnimation> RAPIER_AUTO1;
+    public static AnimationAccessor<ComboAttackAnimation> RAPIER_AUTO2;
+    public static AnimationAccessor<ComboAttackAnimation> RAPIER_AUTO2_ENDER;
+    public static AnimationAccessor<ComboAttackAnimation> RAPIER_AUTO2_OCEAN;
+    public static AnimationAccessor<ComboAttackAnimation> RAPIER_AUTO2_WITHER;
+    public static AnimationAccessor<ComboAttackAnimation> RAPIER_AUTO3;
+    public static AnimationAccessor<ComboAttackAnimation> RAPIER_AUTO3_ENDER;
+    public static AnimationAccessor<ComboAttackAnimation> RAPIER_AUTO3_OCEAN;
+    public static AnimationAccessor<ComboAttackAnimation> RAPIER_AUTO3_WITHER;
 
     public static AnimationAccessor<StaticAnimation> RAPIER_GUARD;
     public static AnimationAccessor<GuardAnimation> RAPIER_GUARD_HIT;
     public static AnimationAccessor<GuardAnimation> RAPIER_GUARD_DEFLECT1;
     public static AnimationAccessor<GuardAnimation> RAPIER_GUARD_DEFLECT2;
-    public static AnimationAccessor<BasicAttackAnimation> RAPIER_GUARD_PARRY;
-    public static AnimationAccessor<BasicAttackAnimation> RAPIER_GUARD_PARRY_ENDER;
-    public static AnimationAccessor<BasicAttackAnimation> RAPIER_GUARD_PARRY_OCEAN;
-    public static AnimationAccessor<BasicAttackAnimation> RAPIER_GUARD_PARRY_WITHER;
-    public static AnimationAccessor<BasicAttackAnimation> RAPIER_GUARD_PARRY_AMETHYST;
+    public static AnimationAccessor<ComboAttackAnimation> RAPIER_GUARD_PARRY;
+    public static AnimationAccessor<ComboAttackAnimation> RAPIER_GUARD_PARRY_ENDER;
+    public static AnimationAccessor<ComboAttackAnimation> RAPIER_GUARD_PARRY_OCEAN;
+    public static AnimationAccessor<ComboAttackAnimation> RAPIER_GUARD_PARRY_WITHER;
+    public static AnimationAccessor<ComboAttackAnimation> RAPIER_GUARD_PARRY_AMETHYST;
 
     public static AnimationAccessor<StaticAnimation> BIPED_HOLD_RAPIER;
     public static AnimationAccessor<StaticAnimation> BIPED_SNEAK_RAPIER;
@@ -104,8 +104,8 @@ public class RapierAnimations {
 
     public static AnimationAccessor<AirSlashAnimation> RAPIER_AIR_SLASH_AMETHYST;
     public static AnimationAccessor<DashAttackAnimation> RAPIER_DASH_AMETHYST;
-    public static AnimationAccessor<BasicAttackAnimation> RAPIER_AUTO2_AMETHYST;
-    public static AnimationAccessor<BasicAttackAnimation> RAPIER_AUTO3_AMETHYST;
+    public static AnimationAccessor<ComboAttackAnimation> RAPIER_AUTO2_AMETHYST;
+    public static AnimationAccessor<ComboAttackAnimation> RAPIER_AUTO3_AMETHYST;
     public static AnimationAccessor<AttackAnimation> DEADLYBACKFLIP_SECOND_AMETHYST;
 
     @SubscribeEvent
@@ -254,15 +254,15 @@ public class RapierAnimations {
                 ));
 
         RAPIER_AUTO1 = builder.nextAccessor("biped/combat/rapier_auto1", (accessor) ->
-                new BasicAttackAnimation(0.12F, 0.3F, 0.5F, 0.72F, 0.52F, null, Armatures.BIPED.get().toolR, accessor, Armatures.BIPED)
+                new ComboAttackAnimation(0.12F, 0.3F, 0.5F, 0.72F, 0.52F, null, Armatures.BIPED.get().toolR, accessor, Armatures.BIPED)
                         .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.8F)
                         .addProperty(ActionAnimationProperty.CANCELABLE_MOVE, true));
         RAPIER_AUTO2 = builder.nextAccessor("biped/combat/rapier_auto2", (accessor) ->
-                new BasicAttackAnimation(0.12F, 0.3F, 0.38F, 0.48F, 0.54F, null, Armatures.BIPED.get().toolR, accessor, Armatures.BIPED)
+                new ComboAttackAnimation(0.12F, 0.3F, 0.38F, 0.48F, 0.54F, null, Armatures.BIPED.get().toolR, accessor, Armatures.BIPED)
                         .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.8F)
                         .addProperty(ActionAnimationProperty.CANCELABLE_MOVE, true));
         RAPIER_AUTO2_ENDER = builder.nextAccessor("biped/combat/rapier_auto2_ender", (accessor) ->
-                new BasicAttackAnimation(0.18F, accessor, Armatures.BIPED,
+                new ComboAttackAnimation(0.18F, accessor, Armatures.BIPED,
                         new AttackAnimation.Phase(0.0F, 0.3F, 0.38F, 0.56F, 0.6F, 0.6F, Armatures.BIPED.get().toolR, null)
                                 .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.5F))
                                 .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.NONE),
@@ -277,7 +277,7 @@ public class RapierAnimations {
                                 AnimationEvent.InTimeEvent.create(0.52F, ReusableEvents.ENDER_IMAGE, AnimationEvent.Side.CLIENT)
                         ));
         RAPIER_AUTO2_OCEAN = builder.nextAccessor("biped/combat/rapier_auto2_ocean", (accessor) ->
-                new BasicAttackAnimation(0.18F, accessor, Armatures.BIPED,
+                new ComboAttackAnimation(0.18F, accessor, Armatures.BIPED,
                         new AttackAnimation.Phase(0.0F, 0.3F, 0.28F, 0.54F, 0.6F, 0.6F, Armatures.BIPED.get().toolR, null)
                                 .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.5F))
                                 .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.NONE),
@@ -286,14 +286,14 @@ public class RapierAnimations {
                         .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.9F)
                         .addEvents(AnimationEvent.InPeriodEvent.create(0.2F, 0.86F, ReusableEvents.OCEAN_PARTICLES_WEAPON, AnimationEvent.Side.CLIENT)));
         RAPIER_AUTO2_WITHER = builder.nextAccessor("biped/combat/rapier_auto2_wither", (accessor) ->
-                new BasicAttackAnimation(0.12F, 0.3F, 0.46F, 0.66F, 0.66F, null, Armatures.BIPED.get().toolR, accessor, Armatures.BIPED)
+                new ComboAttackAnimation(0.12F, 0.3F, 0.46F, 0.66F, 0.66F, null, Armatures.BIPED.get().toolR, accessor, Armatures.BIPED)
                         .addProperty(AttackPhaseProperty.SWING_SOUND, SoundEvents.WITHER_SHOOT)
                         .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(1.2F))
                         .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.9F)
                         .addProperty(ActionAnimationProperty.CANCELABLE_MOVE, true)
                         .addEvents(AnimationEvent.InTimeEvent.create(0.42F, ReusableEvents.WITHER_PARTICLES_TINY, AnimationEvent.Side.CLIENT)));
         RAPIER_AUTO3 = builder.nextAccessor("biped/combat/rapier_auto3", (accessor) ->
-                new BasicAttackAnimation(0.18F, accessor, Armatures.BIPED,
+                new ComboAttackAnimation(0.18F, accessor, Armatures.BIPED,
                         new AttackAnimation.Phase(0.0F, 0.3F, 0.25F, 0.42F, 0.5F, 0.5F, Armatures.BIPED.get().toolR, null)
                                 .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.5F))
                                 .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.NONE),
@@ -301,7 +301,7 @@ public class RapierAnimations {
                                 .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.75F)))
                         .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 2.1F));
         RAPIER_AUTO3_ENDER = builder.nextAccessor("biped/combat/rapier_auto3_ender", (accessor) ->
-                new BasicAttackAnimation(0.18F, accessor, Armatures.BIPED,
+                new ComboAttackAnimation(0.18F, accessor, Armatures.BIPED,
                         new AttackAnimation.Phase(0.0F, 0.3F, 0.25F, 0.42F, 0.5F, 0.5F, Armatures.BIPED.get().toolR, null)
                                 .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.5F))
                                 .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.NONE),
@@ -315,7 +315,7 @@ public class RapierAnimations {
                                 AnimationEvent.InTimeEvent.create(0.39F, ReusableEvents.ENDER_IMAGE, AnimationEvent.Side.CLIENT)
                         ));
         RAPIER_AUTO3_OCEAN = builder.nextAccessor("biped/combat/rapier_auto3_ocean", (accessor) ->
-                new BasicAttackAnimation(0.18F, accessor, Armatures.BIPED,
+                new ComboAttackAnimation(0.18F, accessor, Armatures.BIPED,
                         new AttackAnimation.Phase(0.0F, 0.3F, 0.28F, 0.52F, 0.6F, 0.6F, Armatures.BIPED.get().toolR, null)
                                 .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.5F))
                                 .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.NONE),
@@ -324,7 +324,7 @@ public class RapierAnimations {
                         .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 2.1F)
                         .addEvents(AnimationEvent.InPeriodEvent.create(0.24F, 1.2F, ReusableEvents.OCEAN_PARTICLES_WEAPON, AnimationEvent.Side.CLIENT)));
         RAPIER_AUTO3_WITHER = builder.nextAccessor("biped/combat/rapier_auto3_wither", (accessor) ->
-                new BasicAttackAnimation(0.18F, accessor, Armatures.BIPED,
+                new ComboAttackAnimation(0.18F, accessor, Armatures.BIPED,
                         new AttackAnimation.Phase(0.0F, 0.3F, 0.33F, 0.46F, 0.48F, 0.5F, Armatures.BIPED.get().toolR, null)
                                 .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.33F))
                                 .addProperty(AttackPhaseProperty.SWING_SOUND, SoundEvents.WITHER_SHOOT)
@@ -345,7 +345,7 @@ public class RapierAnimations {
         RAPIER_GUARD_DEFLECT2 = builder.nextAccessor("biped/skill/guard_rapier_deflect2", (accessor) -> new GuardAnimation(0.02F, accessor, Armatures.BIPED));
 
         RAPIER_GUARD_PARRY = builder.nextAccessor("biped/skill/guard_rapier_parry", (accessor) ->
-                new BasicAttackAnimation(0.12F, 0.42F, 0.56F, 0.6F, null, Armatures.BIPED.get().toolR, accessor, Armatures.BIPED)
+                new ComboAttackAnimation(0.12F, 0.42F, 0.56F, 0.6F, null, Armatures.BIPED.get().toolR, accessor, Armatures.BIPED)
                         .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(1.6F))
                         .addProperty(AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(99))
                         .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.setter(3))
@@ -355,7 +355,7 @@ public class RapierAnimations {
                         .addProperty(ActionAnimationProperty.CANCELABLE_MOVE, false)
                         .addState(EntityState.MOVEMENT_LOCKED, true));
         RAPIER_GUARD_PARRY_ENDER = builder.nextAccessor("biped/skill/guard_rapier_parry_ender", (accessor) ->
-                new BasicAttackAnimation(0.12F, 0.56F, 0.76F, 0.78F, null, Armatures.BIPED.get().toolR, accessor, Armatures.BIPED)
+                new ComboAttackAnimation(0.12F, 0.56F, 0.76F, 0.78F, null, Armatures.BIPED.get().toolR, accessor, Armatures.BIPED)
                         .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(1.8F))
                         .addProperty(AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(99))
                         .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.setter(3))
@@ -373,7 +373,7 @@ public class RapierAnimations {
                         .addState(EntityState.MOVEMENT_LOCKED, true)
         );
         RAPIER_GUARD_PARRY_OCEAN = builder.nextAccessor("biped/skill/guard_rapier_parry_ocean", (accessor) ->
-                new BasicAttackAnimation(0.18F, accessor, Armatures.BIPED,
+                new ComboAttackAnimation(0.18F, accessor, Armatures.BIPED,
                         new AttackAnimation.Phase(0.0F, 0.3F, 0.28F, 0.32F, 0.35F, 0.4F, Armatures.BIPED.get().toolR, null)
                                 .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.33F))
                                 .addProperty(AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(99))
@@ -407,7 +407,7 @@ public class RapierAnimations {
                         .addState(EntityState.MOVEMENT_LOCKED, true)
         );
         RAPIER_GUARD_PARRY_WITHER = builder.nextAccessor("biped/skill/guard_rapier_parry_wither", (accessor) ->
-                new BasicAttackAnimation(0.18F, accessor, Armatures.BIPED,
+                new ComboAttackAnimation(0.18F, accessor, Armatures.BIPED,
                         new AttackAnimation.Phase(0.0F, 0.3F, 0.25F, 0.3F, 0.35F, 0.4F, Armatures.BIPED.get().rootJoint, RapierColliderPreset.SCREAM)
                                 .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.3F))
                                 .addProperty(AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(33))
@@ -444,17 +444,17 @@ public class RapierAnimations {
                         .addEvents(
                                 AnimationEvent.InTimeEvent.create(0.12F, (entitypatch, param2, param3) -> {
                                     ((ServerPlayer) entitypatch.getOriginal()).addEffect(
-                                            new MobEffectInstance((MobEffect) EpicFightMobEffects.STUN_IMMUNITY.get(), 33, 0, true, false, false)
+                                            new MobEffectInstance((Holder<MobEffect>) EpicFightMobEffects.STUN_IMMUNITY.get(), 33, 0, true, false, false)
                                     );
                                 }, AnimationEvent.Side.SERVER),
                                 AnimationEvent.InTimeEvent.create(0.24F, ReusableEvents.WITHER_PARTICLES_BIG, AnimationEvent.Side.CLIENT),
                                 AnimationEvent.InTimeEvent.create(0.26F, ReusableEvents.WITHER_PARTICLES, AnimationEvent.Side.CLIENT),
                                 AnimationEvent.InTimeEvent.create(0.26F, (entitypatch, param2, param3) -> {
                                     ((ServerPlayer) entitypatch.getOriginal()).addEffect(
-                                            new MobEffectInstance((MobEffect) MobEffects.DARKNESS, 48, 1, true, false, false)
+                                            new MobEffectInstance((Holder<MobEffect>) MobEffects.DARKNESS, 48, 1, true, false, false)
                                     );
                                     ((ServerPlayer) entitypatch.getOriginal()).addEffect(
-                                            new MobEffectInstance((MobEffect) MobEffects.MOVEMENT_SLOWDOWN, 42, 2, true, false, false)
+                                            new MobEffectInstance((Holder<MobEffect>) MobEffects.MOVEMENT_SLOWDOWN, 42, 2, true, false, false)
                                     );
                                 }, AnimationEvent.Side.SERVER)
                         )
@@ -488,7 +488,7 @@ public class RapierAnimations {
                                     }
                                 }, AnimationEvent.Side.BOTH)
                         )
-                        .addState(EntityState.LOCKON_ROTATE, true)
+                        .addState(EntityState.TURNING_LOCKED, true)
                         .addState(EntityState.MOVEMENT_LOCKED, true)
         );
         DEADLYBACKFLIP_SECOND = builder.nextAccessor("biped/skill/rapier_backflip_second", (accessor) ->
@@ -631,7 +631,7 @@ public class RapierAnimations {
                         .addState(EntityState.MOVEMENT_LOCKED, true)
         );
         RAPIER_AUTO2_AMETHYST = builder.nextAccessor("biped/combat/rapier_auto2_amethyst", (accessor) ->
-                new BasicAttackAnimation(0.18F, accessor, Armatures.BIPED,
+                new ComboAttackAnimation(0.18F, accessor, Armatures.BIPED,
                         new AttackAnimation.Phase(0.0F, 0.3F, 0.33F, 0.46F, 0.48F, 0.5F, Armatures.BIPED.get().toolR, null)
                                 .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.35F))
                                 .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.NONE),
@@ -646,7 +646,7 @@ public class RapierAnimations {
                         )
         );
         RAPIER_AUTO3_AMETHYST = builder.nextAccessor("biped/combat/rapier_auto3_amethyst", (accessor) ->
-                new BasicAttackAnimation(0.18F, accessor, Armatures.BIPED,
+                new ComboAttackAnimation(0.18F, accessor, Armatures.BIPED,
                         new AttackAnimation.Phase(0.0F, 0.3F, 0.25F, 0.42F, 0.5F, 0.5F, Armatures.BIPED.get().toolR, null)
                                 .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.35F))
                                 .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.NONE),
@@ -696,7 +696,7 @@ public class RapierAnimations {
                         .addState(EntityState.MOVEMENT_LOCKED, true)
         );
         RAPIER_GUARD_PARRY_AMETHYST = builder.nextAccessor("biped/skill/guard_rapier_parry_amethyst", (accessor) ->
-                new BasicAttackAnimation(0.12F, 0.56F, 0.76F, 0.78F, null, Armatures.BIPED.get().toolR, accessor, Armatures.BIPED)
+                new ComboAttackAnimation(0.12F, 0.56F, 0.76F, 0.78F, null, Armatures.BIPED.get().toolR, accessor, Armatures.BIPED)
                         .addProperty(AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.setter(3.8F))
                         .addProperty(AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(99))
                         .addProperty(AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.setter(3))
@@ -721,44 +721,21 @@ public class RapierAnimations {
         );
     }
 
-    public interface IProxy {
-        @Nullable
-        Entity getClientPlayer();
-    }
-    public static class ClientProxy implements IProxy {
-        @Override
-        public Entity getClientPlayer() {
-            return Minecraft.getInstance().player;
-        }
-    }
-    public static class ServerProxy implements IProxy {
-        @Override
-        public Entity getClientPlayer() {
-            return null;
-        }
-    }
     // Particles and stuff
     public static class ReusableEvents {
         private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         private static final int ENDER_PARTICLE_COUNT = 69;
         private static final int PARTICLE_COUNT = 20;
-        private static final int FOLLOW_DURATION = 18;
         private static final int PARTICLE_COUNT_TINY = 12;
-        private static final int FOLLOW_DURATION_TINY = 12;
         private static final int SPAWN_ALWAYS = 1;
         private static final int SPAWN_INTERVAL = 2;
         private static int tickCounter = 1;
-        private static final Map<Entity, Integer> activeParticles = new HashMap<>();
-        private static final Map<Entity, Integer> activeParticlesWither = new HashMap<>();
-        private static final Map<Entity, Integer> activeParticlesWitherBig = new HashMap<>();
-        private static final Map<Entity, Integer> activeParticlesWitherTiny = new HashMap<>();
 
         public static final AnimationEvent.E0 ENCHANT_PARTICLES = (entitypatch, self, params) -> {
             if (!entitypatch.isLogicalClient()) {
                 Entity entity = entitypatch.getOriginal();
                 ((ServerLevel)entity.level()).sendParticles(ParticleTypes.ENCHANT, entity.xo, entity.yo + 1.0, entity.zo, 10, 0.45, 0.45, 0.45, 0.05);
             }
-
         };
 
         //ENDER
@@ -783,91 +760,101 @@ public class RapierAnimations {
 
         //OCEAN
         private static final AnimationEvent.E0 OCEAN_PARTICLES = (entitypatch, self, params) -> {
-            Entity playerEntity = RapierForEpicfight.proxy.getClientPlayer();
-            if (playerEntity != null) {
-                spawnOceanParticlesFollowingPlayer(playerEntity);
+            if (!entitypatch.isLogicalClient()) {
+                RandomSource random = RandomSource.create();
+                Entity entity = entitypatch.getOriginal();
+                double sphereRadius = 0.69;
+                double yStretchFactor = 1.42;
+                double theta = random.nextDouble() * 2 * Math.PI;
+                double phi = Math.acos(2 * random.nextDouble() - 1);
+                double xOffset = sphereRadius * Math.sin(phi) * Math.cos(theta);
+                double yOffset = sphereRadius * Math.sin(phi) * Math.sin(theta) * yStretchFactor + 0.5;
+                double zOffset = sphereRadius * Math.cos(phi);
+                double vxOffset = xOffset * -0.1;
+                double vyOffset = yOffset * -0.1;
+                double vzOffset = zOffset * -0.1;
+                ((ServerLevel) entity.level()).sendParticles(ParticleTypes.RAIN,
+                        entity.getX() + xOffset,
+                        entity.getY() + yOffset + 0.3,
+                        entity.getZ() + zOffset,
+                        10, vxOffset, vyOffset, vzOffset, 0.05);
             }
         };
         private static final AnimationEvent.E0 OCEAN_PARTICLES_TINY = (entitypatch, self, params) -> {
-            Entity playerEntity = RapierForEpicfight.proxy.getClientPlayer();
-            if (playerEntity != null) {
-                spawnOceanParticlesFollowingPlayer_Tiny(playerEntity);
+            if (!entitypatch.isLogicalClient()) {
+                RandomSource random = RandomSource.create();
+                Entity entity = entitypatch.getOriginal();
+                double horizontalRadius = 1.2;
+                double xOffset = (random.nextDouble() - 0.5) * horizontalRadius;
+                double yOffset = (random.nextDouble() - random.nextDouble()) * 1.5D;
+                double zOffset = (random.nextDouble() - 0.5) * horizontalRadius;
+                ((ServerLevel) entity.level()).sendParticles(ParticleTypes.FALLING_WATER,
+                        entity.getX() + xOffset,
+                        entity.getY() + yOffset,
+                        entity.getZ() + zOffset,
+                        10, 0, 0.5, 0, 0.05);
             }
         };
         private static final AnimationEvent.E0 OCEAN_PARTICLES_WEAPON = (entitypatch, self, params) -> {
             Entity entity = entitypatch.getOriginal();
-            Entity playerEntity = RapierForEpicfight.proxy.getClientPlayer();
-            if (playerEntity != null) {
-                int numParticles = 5;
-                for (int i = 0; i < numParticles; i++) {
-                    Vec3 wep = getJointWithTranslation(Minecraft.getInstance().player, entity, new Vec3f(0F, 0F, -0.6F), Armatures.BIPED.get().toolR);
-                    if (wep != null) {
-                        Vec3 direction = playerEntity.getLookAngle().normalize();
-                        double t = (double)i / numParticles;
-                        Vec3 point = wep.add(direction.scale(t * 2));
-                        Particle particle1 = Minecraft.getInstance().particleEngine.createParticle(ParticleTypes.BUBBLE,
-                                point.x, point.y, point.z,
-                                0,
-                                0,
-                                0
-                        );
-                        Particle particle2 = Minecraft.getInstance().particleEngine.createParticle(ParticleTypes.BUBBLE_POP,
-                                point.x, point.y, point.z,
-                                0,
-                                0,
-                                0
-                        );
-                        if (particle1 != null & particle2 != null) {
-                            particle1.scale(0.86F);
-                            particle1.setLifetime(12);
-                            particle2.scale(0.86F);
-                            particle2.setLifetime(8);
-                        }
+            int numParticles = 5;
+            for (int i = 0; i < numParticles; i++) {
+                Vec3 wep = getJointWithTranslation(Minecraft.getInstance().player, entity, new Vec3f(0F, 0F, -0.6F), Armatures.BIPED.get().toolR);
+                if (wep != null) {
+                    Vec3 direction = entitypatch.getOriginal().getEyePosition();
+                    double t = (double) i / numParticles;
+                    Vec3 point = wep.add(direction.scale(t * 2));
+                    Particle particle1 = Minecraft.getInstance().particleEngine.createParticle(ParticleTypes.BUBBLE,
+                            point.x, point.y, point.z,
+                            0,
+                            0,
+                            0
+                    );
+                    Particle particle2 = Minecraft.getInstance().particleEngine.createParticle(ParticleTypes.BUBBLE_POP,
+                            point.x, point.y, point.z,
+                            0,
+                            0,
+                            0
+                    );
+                    if (particle1 != null & particle2 != null) {
+                        particle1.scale(0.86F);
+                        particle1.setLifetime(12);
+                        particle2.scale(0.86F);
+                        particle2.setLifetime(8);
                     }
                 }
             }
         };
+
         private static final AnimationEvent.E0 OCEAN_PARTICLES_SOUND = (entitypatch, self, params) -> {
             Entity entity = entitypatch.getOriginal();
-            Entity playerEntity = RapierForEpicfight.proxy.getClientPlayer();
-            if (playerEntity != null) {
-                entity.playSound(RapierSounds.RAPIER_OCEAN_JUMP.get());
-            }
+            entity.playSound(RapierSounds.RAPIER_OCEAN_JUMP.get());
         };
 
         //WITHER
         private static final AnimationEvent.E0 WITHER_PARTICLES = (entitypatch, self, params) -> {
-            Entity playerEntity = RapierForEpicfight.proxy.getClientPlayer();
-            if (playerEntity != null) {
-                spawnWitherParticlesFollowingPlayer(playerEntity);
-            }
-        };
-        private static final AnimationEvent.E0 WITHER_PARTICLES_TINY = (entitypatch, self, params) -> {
-            Entity playerEntity = RapierForEpicfight.proxy.getClientPlayer();
-            if (playerEntity != null) {
-                spawnWitherParticlesFollowingPlayer_Tiny(playerEntity);
-            }
-        };
-        private static final AnimationEvent.E0 WITHER_PARTICLES_BIG = (entitypatch, self, params) -> {
-            Entity playerEntity = RapierForEpicfight.proxy.getClientPlayer();
-            if (playerEntity != null) {
-                spawnWitherParticlesFollowingPlayer_Big(playerEntity);
-            }
-        };
-        private static final AnimationEvent.E0 WITHER_PARTICLES_INSTANT = (entitypatch, self, params) -> {
-            Entity playerEntity = RapierForEpicfight.proxy.getClientPlayer();
             Entity entity = entitypatch.getOriginal();
             RandomSource random = entitypatch.getOriginal().getRandom();
-            if (playerEntity != null) {
+            spawnParticlesWither(entity, random);
+        };
+        private static final AnimationEvent.E0 WITHER_PARTICLES_TINY = (entitypatch, self, params) -> {
+            Entity entity = entitypatch.getOriginal();
+            RandomSource random = entitypatch.getOriginal().getRandom();
+            spawnParticlesWitherTiny(entity, random);
+        };
+        private static final AnimationEvent.E0 WITHER_PARTICLES_BIG = (entitypatch, self, params) -> {
+            Entity entity = entitypatch.getOriginal();
+            RandomSource random = entitypatch.getOriginal().getRandom();
+            spawnParticlesWitherBig(entity, random);
+        };
+        private static final AnimationEvent.E0 WITHER_PARTICLES_INSTANT = (entitypatch, self, params) -> {
+            Entity entity = entitypatch.getOriginal();
+            RandomSource random = entitypatch.getOriginal().getRandom();
                 spawnParticlesWitherInstant(entity, random);
-            }
         };
         private static final AnimationEvent.E0 WITHER_PARTICLES_SOUND = (entitypatch, self, params) -> {
             Entity entity = entitypatch.getOriginal();
-            Entity playerEntity = RapierForEpicfight.proxy.getClientPlayer();
-            if (playerEntity != null) {
-                entity.playSound(SoundEvents.WITHER_AMBIENT);
-            }
+            entity.playSound(SoundEvents.WITHER_AMBIENT);
         };
 
         //PARTICLE SPAWNERS
@@ -892,198 +879,83 @@ public class RapierAnimations {
             }
         }
 
-        public static void spawnParticlesOcean() {
+        public static void spawnParticlesWither(Entity entity, RandomSource random) {
             ClientLevel clientLevel = Minecraft.getInstance().level;
             if (clientLevel != null) {
-
-                RandomSource random = RandomSource.create();
                 tickCounter++;
-
-                activeParticles.entrySet().removeIf(entry -> {
-                    Entity entity = entry.getKey();
-                    int ticksRemaining = entry.getValue();
-                    if (ticksRemaining <= 0 || !entity.isAlive()) {
-                        return true;
+                if (tickCounter % SPAWN_INTERVAL == 0) {
+                    double sphereRadius = 0.66;
+                    for (int i = 0; i < PARTICLE_COUNT_TINY; i++) {
+                        double theta = random.nextDouble() * 2 * Math.PI;
+                        double phi = Math.acos(2 * random.nextDouble() - 1);
+                        double xOffset = sphereRadius * Math.sin(phi) * Math.cos(theta);
+                        double yOffset = sphereRadius * Math.sin(phi) * Math.sin(theta);
+                        double zOffset = sphereRadius * Math.cos(phi);
+                        double vxOffset = xOffset * 0.2;
+                        double vyOffset = yOffset * 0.2;
+                        double vzOffset = zOffset * 0.2;
+                        clientLevel.addParticle(ParticleTypes.LARGE_SMOKE,
+                                entity.getX() + xOffset,
+                                entity.getY() + yOffset + 0.6,
+                                entity.getZ() + zOffset,
+                                vxOffset,
+                                vyOffset,
+                                vzOffset
+                        );
                     }
-                    if (tickCounter % SPAWN_INTERVAL == 0) {
-                        double sphereRadius = 0.69;
-                        double yStretchFactor = 1.42;
-                        for (int i = 0; i < PARTICLE_COUNT; i++) {
-                            double theta = random.nextDouble() * 2 * Math.PI;
-                            double phi = Math.acos(2 * random.nextDouble() - 1);
-                            double xOffset = sphereRadius * Math.sin(phi) * Math.cos(theta);
-                            double yOffset = sphereRadius * Math.sin(phi) * Math.sin(theta) * yStretchFactor + 0.5;
-                            double zOffset = sphereRadius * Math.cos(phi);
-                            double vxOffset = xOffset * -0.1;
-                            double vyOffset = yOffset * -0.1;
-                            double vzOffset = zOffset * -0.1;
-                            clientLevel.addParticle(ParticleTypes.RAIN,
-                                    entity.getX() + xOffset,
-                                    entity.getY() + yOffset + 0.3,
-                                    entity.getZ() + zOffset,
-                                    vxOffset,
-                                    vyOffset,
-                                    vzOffset
-                            );
-                        }
-                    }
-                    entry.setValue(ticksRemaining - 1);
-                    return false;
-                });
+                }
             }
         }
-        public static void spawnParticlesOceanTiny() {
+        public static void spawnParticlesWitherTiny(Entity entity, RandomSource random) {
             ClientLevel clientLevel = Minecraft.getInstance().level;
             if (clientLevel != null) {
+                if (tickCounter % SPAWN_INTERVAL == 0) {
+                    double horizontalRadius = 1.2;
+                    for (int i = 0; i < PARTICLE_COUNT; i++) {
+                        double hxOffset = (random.nextDouble() - 0.6) * horizontalRadius;
+                        double hyOffset = (random.nextDouble() - random.nextDouble()) * 1.8D;
+                        double hzOffset = (random.nextDouble() - 0.6) * horizontalRadius;
+                        double vxOffset = random.nextDouble() * (0.06 - (-0.06)) - 0.06;
+                        double vyOffset = 0.066;
+                        double vzOffset = random.nextDouble() * (0.06 - (-0.06)) - 0.06;
 
-                RandomSource random = RandomSource.create();
-                tickCounter++;
-
-                activeParticles.entrySet().removeIf(entry -> {
-                    Entity entity = entry.getKey();
-                    int ticksRemaining = entry.getValue();
-
-                    if (ticksRemaining <= 0 || !entity.isAlive()) {
-                        return true;
+                        clientLevel.addParticle(ParticleTypes.SMOKE,
+                                entity.getX() + hxOffset,
+                                entity.getY() + hyOffset,
+                                entity.getZ() + hzOffset,
+                                vxOffset,
+                                vyOffset,
+                                vzOffset
+                        );
                     }
-                    if (tickCounter % SPAWN_INTERVAL == 0) {
-                        double horizontalRadius = 1.2;
-                        for (int i = 0; i < PARTICLE_COUNT_TINY; i++) {
-                            double xOffset = (random.nextDouble() - 0.5) * horizontalRadius;
-                            double yOffset = (random.nextDouble() - random.nextDouble()) * 1.5D;
-                            double zOffset = (random.nextDouble() - 0.5) * horizontalRadius;
-
-                            clientLevel.addParticle(ParticleTypes.FALLING_WATER,
-                                    entity.getX() + xOffset,
-                                    entity.getY() + yOffset,
-                                    entity.getZ() + zOffset,
-                                    0,
-                                    0.5,
-                                    0
-                            );
-                        }
-                    }
-                    entry.setValue(ticksRemaining - 1);
-                    return false;
-                });
+                }
             }
         }
-
-        public static void spawnParticlesWither() {
+        public static void spawnParticlesWitherBig(Entity entity, RandomSource random) {
             ClientLevel clientLevel = Minecraft.getInstance().level;
             if (clientLevel != null) {
-
-                RandomSource random = RandomSource.create();
                 tickCounter++;
-
-                activeParticlesWither.entrySet().removeIf(entry -> {
-                    Entity entity = entry.getKey();
-                    int ticksRemaining = entry.getValue();
-                    if (ticksRemaining <= 0 || !entity.isAlive()) {
-                        return true;
+                if (tickCounter % SPAWN_ALWAYS == 0) {
+                    double sphereRadius = 2;
+                    for (int i = 0; i < PARTICLE_COUNT; i++) {
+                        double theta = random.nextDouble() * 2 * Math.PI;
+                        double phi = Math.acos(2 * random.nextDouble() - 1);
+                        double xOffset = sphereRadius * Math.sin(phi) * Math.cos(theta);
+                        double yOffset = sphereRadius * Math.sin(phi) * Math.sin(theta);
+                        double zOffset = sphereRadius * Math.cos(phi);
+                        double vxOffset = xOffset * 0.2;
+                        double vyOffset = yOffset * 0.2;
+                        double vzOffset = zOffset * 0.2;
+                        clientLevel.addParticle(ParticleTypes.LARGE_SMOKE,
+                                entity.getX() + xOffset,
+                                entity.getY() + yOffset,
+                                entity.getZ() + zOffset,
+                                vxOffset,
+                                vyOffset,
+                                vzOffset
+                        );
                     }
-                    if (tickCounter % SPAWN_INTERVAL == 0) {
-                        double sphereRadius = 0.66;
-                        for (int i = 0; i < PARTICLE_COUNT_TINY; i++) {
-                            double theta = random.nextDouble() * 2 * Math.PI;
-                            double phi = Math.acos(2 * random.nextDouble() - 1);
-                            double xOffset = sphereRadius * Math.sin(phi) * Math.cos(theta);
-                            double yOffset = sphereRadius * Math.sin(phi) * Math.sin(theta);
-                            double zOffset = sphereRadius * Math.cos(phi);
-                            double vxOffset = xOffset * 0.2;
-                            double vyOffset = yOffset * 0.2;
-                            double vzOffset = zOffset * 0.2;
-                            clientLevel.addParticle(ParticleTypes.LARGE_SMOKE,
-                                    entity.getX() + xOffset,
-                                    entity.getY() + yOffset + 0.6,
-                                    entity.getZ() + zOffset,
-                                    vxOffset,
-                                    vyOffset,
-                                    vzOffset
-                            );
-                        }
-                    }
-                    entry.setValue(ticksRemaining - 1);
-                    return false;
-                });
-            }
-        }
-        public static void spawnParticlesWitherBig() {
-            ClientLevel clientLevel = Minecraft.getInstance().level;
-            if (clientLevel != null) {
-
-                RandomSource random = RandomSource.create();
-                tickCounter++;
-
-                activeParticlesWitherBig.entrySet().removeIf(entry -> {
-                    Entity entity = entry.getKey();
-                    int ticksRemaining = entry.getValue();
-                    if (ticksRemaining <= 0 || !entity.isAlive()) {
-                        return true;
-                    }
-                    if (tickCounter % SPAWN_ALWAYS == 0) {
-                        double sphereRadius = 2;
-                        for (int i = 0; i < PARTICLE_COUNT; i++) {
-                            double theta = random.nextDouble() * 2 * Math.PI;
-                            double phi = Math.acos(2 * random.nextDouble() - 1);
-                            double xOffset = sphereRadius * Math.sin(phi) * Math.cos(theta);
-                            double yOffset = sphereRadius * Math.sin(phi) * Math.sin(theta);
-                            double zOffset = sphereRadius * Math.cos(phi);
-                            double vxOffset = xOffset * 0.2;
-                            double vyOffset = yOffset * 0.2;
-                            double vzOffset = zOffset * 0.2;
-                            clientLevel.addParticle(ParticleTypes.LARGE_SMOKE,
-                                    entity.getX() + xOffset,
-                                    entity.getY() + yOffset,
-                                    entity.getZ() + zOffset,
-                                    vxOffset,
-                                    vyOffset,
-                                    vzOffset
-                            );
-                        }
-                    }
-                    entry.setValue(ticksRemaining - 1);
-                    return false;
-                });
-            }
-        }
-        public static void spawnParticlesWitherTiny() {
-            ClientLevel clientLevel = Minecraft.getInstance().level;
-            if (clientLevel != null) {
-
-                RandomSource random = RandomSource.create();
-                tickCounter++;
-
-                activeParticlesWitherTiny.entrySet().removeIf(entry -> {
-                    Entity entity = entry.getKey();
-                    int ticksRemaining = entry.getValue();
-
-                    if (ticksRemaining <= 0 || !entity.isAlive()) {
-                        return true;
-                    }
-                    if (tickCounter % SPAWN_INTERVAL == 0) {
-                        double horizontalRadius = 1.2;
-                        for (int i = 0; i < PARTICLE_COUNT; i++) {
-                            double hxOffset = (random.nextDouble() - 0.6) * horizontalRadius;
-                            double hyOffset = (random.nextDouble() - random.nextDouble()) * 1.8D;
-                            double hzOffset = (random.nextDouble() - 0.6) * horizontalRadius;
-                            double vxOffset = random.nextDouble() * (0.06 - (-0.06)) - 0.06;
-                            double vyOffset = 0.066;
-                            double vzOffset = random.nextDouble() * (0.06 - (-0.06)) - 0.06;
-
-                            clientLevel.addParticle(ParticleTypes.SMOKE,
-                                    entity.getX() + hxOffset,
-                                    entity.getY() + hyOffset,
-                                    entity.getZ() + hzOffset,
-                                    vxOffset,
-                                    vyOffset,
-                                    vzOffset
-                            );
-                        }
-                    }
-                    entry.setValue(ticksRemaining - 1);
-                    return false;
-                });
+                }
             }
         }
         private static void spawnParticlesWitherInstant(Entity entity, RandomSource random) {
@@ -1109,32 +981,6 @@ public class RapierAnimations {
                             vzOffset
                     );
                 }
-            }
-        }
-
-        public static void spawnOceanParticlesFollowingPlayer(Entity entity) {
-            if (!activeParticles.containsKey(entity)) {
-                activeParticles.put(entity, FOLLOW_DURATION);
-            }
-        }
-        public static void spawnOceanParticlesFollowingPlayer_Tiny(Entity entity) {
-            if (!activeParticles.containsKey(entity)) {
-                activeParticles.put(entity, FOLLOW_DURATION_TINY);
-            }
-        }
-        public static void spawnWitherParticlesFollowingPlayer(Entity entity) {
-            if (!activeParticlesWither.containsKey(entity)) {
-                activeParticlesWither.put(entity, FOLLOW_DURATION_TINY);
-            }
-        }
-        public static void spawnWitherParticlesFollowingPlayer_Big(Entity entity) {
-            if (!activeParticlesWitherBig.containsKey(entity)) {
-                activeParticlesWitherBig.put(entity, FOLLOW_DURATION);
-            }
-        }
-        public static void spawnWitherParticlesFollowingPlayer_Tiny(Entity entity) {
-            if (!activeParticlesWitherTiny.containsKey(entity)) {
-                activeParticlesWitherTiny.put(entity, FOLLOW_DURATION_TINY);
             }
         }
     }

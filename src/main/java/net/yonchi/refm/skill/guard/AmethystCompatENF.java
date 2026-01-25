@@ -2,20 +2,17 @@ package net.yonchi.refm.skill.guard;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
 import net.yonchi.refm.RapierForEpicfight;
 import net.yonchi.refm.gameasset.RapierAnimations;
 import net.yonchi.refm.world.capabilities.item.RapierWeaponCategories;
 import net.yonchi.refm.world.item.RapierAddonItems;
 
-import yesman.epicfight.api.client.forgeevent.WeaponCategoryIconRegisterEvent;
-import yesman.epicfight.api.forgeevent.SkillBuildEvent;
-import yesman.epicfight.api.forgeevent.SkillBuildEvent.ModRegistryWorker.SkillCreateEvent;
+import yesman.epicfight.api.client.event.types.registry.RegisterWeaponCategoryIconEvent;
+import yesman.epicfight.api.event.types.registry.SkillBuilderModificationEvent;
 import yesman.epicfight.compat.ICompatModule;
 import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.skill.guard.GuardSkill;
@@ -23,15 +20,20 @@ import yesman.epicfight.skill.guard.ParryingSkill;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = RapierForEpicfight.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AmethystCompatENF implements ICompatModule {
-    public static void forceGuard(SkillBuildEvent bus) {
-    }
+    @Override
+    public void onGameEventBus(IEventBus iEventBus) {}
+    @Override
+    public void onModEventBusClient(IEventBus iEventBus) {}
+    @Override
+    public void onGameEventBusClient(IEventBus iEventBus) {}
+    @Override
+    public void onModEventBus(IEventBus iEventBus) {}
 
     @SubscribeEvent
-    public static void onParrySkillCreate(SkillCreateEvent<ParryingSkill.Builder> event) {
+    public static void onParrySkillCreate(SkillBuilderModificationEvent event) {
         if (event.getRegistryName().equals(ResourceLocation.fromNamespaceAndPath("efn","efn_parry"))) {
-            GuardSkill.Builder builder = event.getSkillBuilder();
+            GuardSkill.Builder builder = (ParryingSkill.Builder) event.getSkillBuilder();
             builder.addGuardMotion(RapierWeaponCategories.AMETHYST_RAPIER, (item, player) -> {
                 return RapierAnimations.RAPIER_GUARD_HIT;
             }).addGuardBreakMotion(RapierWeaponCategories.AMETHYST_RAPIER, (item, player) -> {
@@ -44,22 +46,8 @@ public class AmethystCompatENF implements ICompatModule {
     }
 
     @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public static void onIconCreate(WeaponCategoryIconRegisterEvent icon){
+    public static void onIconCreate(RegisterWeaponCategoryIconEvent icon){
         icon.registerCategory(RapierWeaponCategories.AMETHYST_RAPIER, new ItemStack(RapierAddonItems.AMETHYST_RAPIER.get()));
         System.out.println("[AmethystCompatEFN] Amethyst Skill icons has been implemented");
-    }
-
-    @Override
-    public void onModEventBus(IEventBus iEventBus) {
-    }
-    @Override
-    public void onForgeEventBus(IEventBus iEventBus) {
-    }
-    @Override
-    public void onModEventBusClient(IEventBus iEventBus) {
-    }
-    @Override
-    public void onForgeEventBusClient(IEventBus iEventBus) {
     }
 }

@@ -2,19 +2,18 @@
     "type": "minecraft:crafting_shaped",
     "pattern":
     [
-        "N  ",
+        "B  ",
         "SBB",
         "   "
     ],
     "key":
     {
-        "N": { "item" : "minecraft:iron_nugget" },
-        "B": { "item" : "minecraft:iron_ingot" },
+        "B": { "item" : "minecraft:diamond" },
         "S": { "item" : "minecraft:stick" }
     },
     "result":
     {
-        "item" : "refm:iron_rapier",
+        "id" : "refm:diamond_rapier",
         "count" : 1
     }
 }

@@ -4,12 +4,12 @@
         "item": "refm:netherite_rapier"
     },
     "addition": {
-        "item" : "minecraft:dragon_breath"
+        "item" : "minecraft:nether_star"
     },
     "result": {
-        "item": "refm:enderite_rapier"
+        "id": "refm:witherite_rapier"
     },
     "template": {
-        "item": "refm:end_upgrade"
+        "item": "refm:wither_upgrade"
     }
 }

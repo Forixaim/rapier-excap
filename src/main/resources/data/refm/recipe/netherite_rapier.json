@@ -4,12 +4,12 @@
         "item": "refm:diamond_rapier"
     },
     "addition": {
-        "item" : "minecraft:heart_of_the_sea"
+        "item" : "minecraft:netherite_ingot"
     },
     "result": {
-        "item": "refm:oceanite_rapier"
+        "id": "refm:netherite_rapier"
     },
     "template": {
-        "item": "refm:ocean_upgrade"
+      "item": "minecraft:netherite_upgrade_smithing_template"
     }
 }

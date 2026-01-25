@@ -8,13 +8,13 @@
   ],
   "key":
   {
-    "E": { "item" : "minecraft:wither_skeleton_skull" },
+    "E": { "item" : "minecraft:ender_eye" },
     "U" : {"item" : "minecraft:netherite_upgrade_smithing_template"},
-    "B": { "item" : "minecraft:soul_sand" }
+    "B": { "item" : "minecraft:end_stone" }
   },
   "result":
   {
-    "item" : "refm:wither_upgrade",
+    "id" : "refm:end_upgrade",
     "count" : 1
   }
 }

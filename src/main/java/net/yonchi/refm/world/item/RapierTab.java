@@ -4,17 +4,18 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import net.yonchi.refm.RapierForEpicfight;
+
+import java.util.function.Supplier;
 
 public class RapierTab {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, RapierForEpicfight.MOD_ID);
 
-    public static final RegistryObject<CreativeModeTab> RAPIERS_TAB = CREATIVE_MODE_TABS.register("rapiers_tab", () -> CreativeModeTab.builder().icon(() ->
+    public static final Supplier<CreativeModeTab> RAPIERS_TAB = CREATIVE_MODE_TABS.register("rapiers_tab", () -> CreativeModeTab.builder().icon(() ->
                     new ItemStack(RapierAddonItems.IRON_RAPIER.get()))
                     .title(Component.translatable("creativetab.rapiers_tab"))
                     .displayItems((itemDisplayParameters, output) -> {
