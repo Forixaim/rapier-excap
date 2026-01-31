@@ -30,7 +30,7 @@ public class RapierCompatENF implements ICompatModule {
     public void onGameEventBusClient(IEventBus iEventBus) {}
     @Override
     public void onModEventBus(IEventBus iEventBus) {}
-
+/*
     @SubscribeEvent
     public static void onEnhancedParrySkillCreate(SkillBuilderModificationEvent event) {
         if (event.getRegistryName().equals(ResourceLocation.fromNamespaceAndPath("efn","efn_parry"))) {
@@ -71,5 +71,5 @@ public class RapierCompatENF implements ICompatModule {
         icon.registerCategory(RapierWeaponCategories.OCEAN_RAPIER, new ItemStack(RapierAddonItems.OCEANITE_RAPIER.get()));
         icon.registerCategory(RapierWeaponCategories.WITHER_RAPIER, new ItemStack(RapierAddonItems.WITHERITE_RAPIER.get()));
         System.out.println("[RapierCompatEFN] Skill icons has been implemented");
-    }
+    }*/
 }

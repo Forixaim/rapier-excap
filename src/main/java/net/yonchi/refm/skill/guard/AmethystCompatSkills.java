@@ -31,10 +31,9 @@ public class AmethystCompatSkills implements ICompatModule {
     public void onGameEventBusClient(IEventBus iEventBus) {}
     @Override
     public void onModEventBus(IEventBus iEventBus) {}
-
+/*
     @SubscribeEvent
     public static void onGuardSkillCreate(SkillBuilderModificationEvent event) {
-        System.out.println("[AmethystCompatSkills] Skill being builded: " + event.getRegistryName());
         if (event.getRegistryName().equals(ResourceLocation.fromNamespaceAndPath("epicfight", "guard"))) {
             GuardSkill.Builder builder = (GuardSkill.Builder) event.getSkillBuilder();
             builder.addGuardMotion(RapierWeaponCategories.AMETHYST_RAPIER, (item, player) -> {
@@ -83,5 +82,5 @@ public class AmethystCompatSkills implements ICompatModule {
     public static void onIconCreate(RegisterWeaponCategoryIconEvent icon){
         icon.registerCategory(RapierWeaponCategories.AMETHYST_RAPIER, new ItemStack(RapierAddonItems.AMETHYST_RAPIER.get()));
         System.out.println("[AmethystCompatSkills] Amethyst Skill icons has been implemented");
-    }
+    } */
 }
