@@ -40,18 +40,19 @@ public class DeadlyBackflipSkill_Ocean extends WeaponInnateSkill {
     @Override
     public void onInitiate(SkillContainer container, EntityEventListener eventListener) {
         super.onInitiate(container, eventListener);
+        List<LivingEntity> hurtEntities = container.getExecutor().getCurrentlyActuallyHitEntities();
         eventListener.registerEvent(EpicFightEventHooks.Animation.END, (event) -> {
-                    if (this.first.equals(event.getAnimation())) {
-                        List<LivingEntity> hurtEntities = container.getExecutor().getCurrentlyActuallyHitEntities();
-                        if (!hurtEntities.isEmpty() && hurtEntities.getFirst().isAlive()) {
-                            container.getExecutor().reserveAnimation(this.second);
-                            container.getExecutor().getServerAnimator().getPlayerFor(null).reset();
-                            container.getExecutor().getCurrentlyActuallyHitEntities().clear();
-                        }
-                    }
-                },
-                this
-        );
+            if (this.first.equals(event.getAnimation())) {
+                if (!hurtEntities.isEmpty() && hurtEntities.getFirst().isAlive()) {
+                    container.getExecutor().getCurrentlyActuallyHitEntities().clear();
+                    container.getExecutor().reserveAnimation(this.second);
+                    container.getExecutor().getServerAnimator().getPlayerFor(null).reset();
+                }
+                if (!eventListener.getEntityPatch().isLastAttackSuccess() && !this.second.equals(event.getAnimation()) && !this.fail.equals(event.getAnimation())) {
+                    container.getExecutor().reserveAnimation(this.fail);
+                }
+            }
+        }, this);
     }
 
     @Override
