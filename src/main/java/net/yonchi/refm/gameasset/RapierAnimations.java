@@ -743,7 +743,6 @@ public class RapierAnimations {
         private static final AnimationEvent.E0 ENDER_PARTICLES = (entitypatch, self, params) -> {
             Entity entity = entitypatch.getOriginal();
             RandomSource random = entitypatch.getOriginal().getRandom();
-            entity.playSound(SoundEvents.FOX_TELEPORT, 1F, 1.2F);
             ClientLevel clientLevel = Minecraft.getInstance().level;
             if (clientLevel != null) {
                 double horizontalRadius = 1.2;
@@ -766,6 +765,7 @@ public class RapierAnimations {
         private static final AnimationEvent.E0 ENDER_IMAGE = (entitypatch, self, params) -> {
             Entity entity = entitypatch.getOriginal();
             entity.level().addParticle(EpicFightParticles.WHITE_AFTERIMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), 0, 0);
+            entity.playSound(SoundEvents.FOX_TELEPORT, 1F, 1.2F);
         };
 
         //OCEAN

@@ -1,5 +1,9 @@
 package net.yonchi.refm;
 
+import net.yonchi.refm.skill.guard.RapierCompatSkills;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackSelectionConfig;
@@ -7,6 +11,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
@@ -16,8 +21,6 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
 import net.yonchi.refm.gameasset.RapierSkills;
 import net.yonchi.refm.world.capabilities.item.WeaponCapabilityPresets;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import net.yonchi.refm.gameasset.RapierSounds;
 import net.yonchi.refm.world.item.RapierTab;
@@ -25,6 +28,7 @@ import net.yonchi.refm.world.capabilities.item.RapierWeaponCategories;
 import net.yonchi.refm.gameasset.RapierAnimations;
 import net.yonchi.refm.world.item.RapierAddonItems;
 
+import yesman.epicfight.main.EpicFightSharedConstants;
 import yesman.epicfight.world.capabilities.item.WeaponCategory;
 
 import java.nio.file.Path;
@@ -39,20 +43,28 @@ public class RapierForEpicfight {
         RapierTab.register(bus);
         WeaponCategory.ENUM_MANAGER.registerEnumCls(MOD_ID, RapierWeaponCategories.class);
 
+
         RapierAddonItems.ITEMS.register(bus);
         RapierSounds.SOUNDS.register(bus);
         RapierSkills.REGISTRY.register(bus);
 
         bus.addListener(RapierAnimations::registerAnimations);
+
         bus.addListener(this::addPackFindersEvent);
         bus.addListener(this::addCreative);
         bus.addListener(this::commonStuff);
+
+        if (EpicFightSharedConstants.isPhysicalClient() && ModList.get().isLoaded("irons_spellbooks")) {}
+        if (EpicFightSharedConstants.isPhysicalClient() && ModList.get().isLoaded("efn")) {}
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
     }
 
-    public void commonStuff(FMLCommonSetupEvent event) {event.enqueueWork(WeaponCapabilityPresets::registerMovesets);}
+    public void commonStuff(FMLCommonSetupEvent event) {
+        event.enqueueWork(WeaponCapabilityPresets::registerMovesets);
+        event.enqueueWork(RapierCompatSkills::registerSkills);
+    }
 
     public void addPackFindersEvent(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {

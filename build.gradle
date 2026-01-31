@@ -112,7 +112,7 @@ configurations {
 }
 
 dependencies {
-    implementation "curse.maven:epic-fight-mod-405076:7494880"
+    implementation "curse.maven:epic-fight-mod-405076:7554591"
     implementation "curse.maven:skinrestorer-443823:6897065"
 }
 

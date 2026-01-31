@@ -4,8 +4,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
 
-import net.neoforged.bus.api.SubscribeEvent;
-
 import net.yonchi.refm.RapierForEpicfight;
 import net.yonchi.refm.gameasset.*;
 
