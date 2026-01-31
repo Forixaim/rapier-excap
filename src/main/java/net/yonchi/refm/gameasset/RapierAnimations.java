@@ -445,7 +445,7 @@ public class RapierAnimations {
                                     ));
                                 }, AnimationEvent.Side.SERVER),
                                 AnimationEvent.InPeriodEvent.create(0.24F, 1.86F, ReusableEvents.WITHER_PARTICLES_BIG, AnimationEvent.Side.CLIENT),
-                                AnimationEvent.InPeriodEvent.create(0.26F, 0.52F, ReusableEvents.WITHER_PARTICLES, AnimationEvent.Side.CLIENT),
+                                AnimationEvent.InPeriodEvent.create(0.24F, 0.72F, ReusableEvents.WITHER_PARTICLES, AnimationEvent.Side.CLIENT),
                                 AnimationEvent.InTimeEvent.create(0.26F, (entitypatch, param2, param3) -> {
                                     ((ServerPlayer) entitypatch.getOriginal()).addEffect(
                                             new MobEffectInstance((Holder<MobEffect>) MobEffects.DARKNESS, 48, 1, true, false, false)
@@ -839,7 +839,7 @@ public class RapierAnimations {
             Entity entity = entitypatch.getOriginal();
             RandomSource random = entitypatch.getOriginal().getRandom();
             double sphereRadius = 0.66;
-            for (int i = 0; i < 12; i++) {
+            for (int i = 0; i < 8; i++) {
                 double theta = random.nextDouble() * 2 * Math.PI;
                 double phi = Math.acos(2 * random.nextDouble() - 1);
                 double xOffset = sphereRadius * Math.sin(phi) * Math.cos(theta);
@@ -876,7 +876,7 @@ public class RapierAnimations {
             Entity entity = entitypatch.getOriginal();
             RandomSource random = entitypatch.getOriginal().getRandom();
             double sphereRadius = 2;
-            for (int i = 0; i < 16; i++) {
+            for (int i = 0; i < 18; i++) {
                 double theta = random.nextDouble() * 2 * Math.PI;
                 double phi = Math.acos(2 * random.nextDouble() - 1);
                 double xOffset = sphereRadius * Math.sin(phi) * Math.cos(theta);

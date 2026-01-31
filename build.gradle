@@ -114,6 +114,11 @@ configurations {
 dependencies {
     implementation "curse.maven:epic-fight-mod-405076:7554591"
     implementation "curse.maven:skinrestorer-443823:6897065"
+
+    implementation "curse.maven:irons-spells-n-spellbooks-855414:7552914"
+    implementation "curse.maven:playeranimator-658587:7389814"
+    implementation "curse.maven:geckolib-388172:7415496"
+    implementation "curse.maven:curios-309927:6529130"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
