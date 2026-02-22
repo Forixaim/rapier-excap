@@ -8,7 +8,6 @@ import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -32,7 +31,6 @@ import java.nio.file.Path;
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(RapierForEpicfight.MOD_ID)
 public class RapierForEpicfight {
-    public static RapierAnimations.IProxy proxy;
     public static final String MOD_ID = "refm";
 
     public RapierForEpicfight(FMLJavaModLoadingContext eventBus) {
@@ -51,12 +49,6 @@ public class RapierForEpicfight {
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> bus.addListener(RapierCompatSkills::onIconCreate));
         bus.addListener(this::addPackFindersEvent);
         bus.addListener(this::addCreative);
-
-        if (FMLEnvironment.dist == Dist.CLIENT) {
-            proxy = new RapierAnimations.ClientProxy();
-        } else {
-            proxy = new RapierAnimations.ServerProxy();
-        }
 
         if (ModList.get().isLoaded("irons_spellbooks")) {
             ICompatModule.loadCompatModule(eventBus, AmethystCompatSkills.class);

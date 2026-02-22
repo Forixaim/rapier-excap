@@ -19,6 +19,7 @@ import yesman.epicfight.api.animation.types.AttackAnimation;
 import yesman.epicfight.api.asset.AssetAccessor;
 import yesman.epicfight.skill.SkillBuilder;
 import yesman.epicfight.skill.SkillContainer;
+import yesman.epicfight.skill.SkillSlots;
 import yesman.epicfight.skill.weaponinnate.WeaponInnateSkill;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import yesman.epicfight.world.capabilities.item.CapabilityItem;
@@ -44,6 +45,7 @@ public class DeadlyBackflipSkill_Ender extends WeaponInnateSkill {
         container.getExecutor().getEventListener().addEventListener(EventType.ATTACK_ANIMATION_END_EVENT, EVENT_UUID, (event) -> {
             if (RapierAnimations.DEADLYBACKFLIP_FIRST.equals(event.getAnimation())) {
                 List<LivingEntity> hurtEntities = event.getPlayerPatch().getCurrentlyActuallyHitEntities();
+                SkillContainer innateSkill = container.getExecutor().getSkill(SkillSlots.WEAPON_INNATE);
 
                 if (!hurtEntities.isEmpty() && hurtEntities.get(0).isAlive()) {
                     event.getPlayerPatch().getServerAnimator().getPlayerFor(null).reset();
@@ -53,6 +55,11 @@ public class DeadlyBackflipSkill_Ender extends WeaponInnateSkill {
                     event.getPlayerPatch().getServerAnimator().getPlayerFor(null).reset();
                     event.getPlayerPatch().reserveAnimation(this.fail);
                     event.getPlayerPatch().getCurrentlyActuallyHitEntities().clear();
+                    if (!container.getExecutor().isLogicalClient()) {
+                        if (innateSkill != null && innateSkill.getSkill() != null && event.getPlayerPatch().isLastAttackSuccess()) {
+                            innateSkill.getSkill().setConsumptionSynchronize(innateSkill, innateSkill.getResource() + this.consumption);
+                        }
+                    }
                 }
             }
         });

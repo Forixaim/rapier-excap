@@ -25,7 +25,7 @@ public class RapierColliderPreset {
 
     public static final Collider RAPIER = registerCollider(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID, "rapier"), new MultiOBBCollider(3, 0.42D, 0.42D, 1.16D, 0D, 0.1D, -1.0D));
     public static final Collider RAPIER_DASH = registerCollider(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID, "rapier_dash"), new MultiOBBCollider(3, 0.86D, 0.52D, 1.2D, 0D, 0.1D, -1.0D));
-    public static final Collider KICK = registerCollider(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID, "kick"), new MultiOBBCollider(3, 0.6D, 0.6D, 0.6D, 0D, 0.7D, -0.3D));
+    public static final Collider KICK = registerCollider(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID, "kick"), new MultiOBBCollider(3, 0.66D, 0.66D, 0.66D, 0D, 0.33D, -0.99D));
     public static final Collider SCREAM = registerCollider(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID, "scream"), new MultiOBBCollider(3, 6D, 3D, 6D, 0D, 3D, 0D));
 }
 
