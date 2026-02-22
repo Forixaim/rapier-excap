@@ -4,7 +4,7 @@ license="All Rights Reserved"
 
 [[mods]]
 modId="refm"
-version="0.3.6-1.21.1"
+version="0.3.7-1.21.1"
 displayName="Rapier For EpicFightMod"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/epic-fight-mod-rapier-moveset-addon"
 logoFile="refm_logo.png"

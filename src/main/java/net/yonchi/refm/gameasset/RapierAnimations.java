@@ -444,8 +444,9 @@ public class RapierAnimations {
                                             38, 0, true, false, false
                                     ));
                                 }, AnimationEvent.Side.SERVER),
-                                AnimationEvent.InPeriodEvent.create(0.24F, 1.86F, ReusableEvents.WITHER_PARTICLES_BIG, AnimationEvent.Side.CLIENT),
+                                AnimationEvent.InPeriodEvent.create(0.24F, 1.44F, ReusableEvents.WITHER_PARTICLES_BIG, AnimationEvent.Side.CLIENT),
                                 AnimationEvent.InPeriodEvent.create(0.24F, 0.72F, ReusableEvents.WITHER_PARTICLES, AnimationEvent.Side.CLIENT),
+                                AnimationEvent.InPeriodEvent.create(0.48F, 1.68F, ReusableEvents.WITHER_PARTICLES_TINY, AnimationEvent.Side.CLIENT),
                                 AnimationEvent.InTimeEvent.create(0.26F, (entitypatch, param2, param3) -> {
                                     ((ServerPlayer) entitypatch.getOriginal()).addEffect(
                                             new MobEffectInstance((Holder<MobEffect>) MobEffects.DARKNESS, 48, 1, true, false, false)
@@ -467,7 +468,7 @@ public class RapierAnimations {
                         .addProperty(AttackAnimationProperty.ATTACK_SPEED_FACTOR, 0.0F)
                         .addState(EntityState.TURNING_LOCKED, false));
         DEADLYBACKFLIP_FIRST = builder.nextAccessor("biped/skill/rapier_backflip_first", (accessor) ->
-                new AttackAnimation(0.1F, 0.2F, 0.32F, 0.84F, 0.96F, RapierColliderPreset.KICK, Armatures.BIPED.get().rootJoint, accessor, Armatures.BIPED)
+                new AttackAnimation(0.1F, 0.2F, 0.32F, 0.92F, 0.96F, RapierColliderPreset.KICK, Armatures.BIPED.get().rootJoint, accessor, Armatures.BIPED)
                         .addProperty(AttackPhaseProperty.HIT_PRIORITY, HitEntityList.Priority.TARGET)
                         .addProperty(AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH_BIG.get())
                         .addProperty(AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT.get())
@@ -475,7 +476,7 @@ public class RapierAnimations {
                         .addProperty(AttackAnimationProperty.AFFECT_SPEED, true)
                         .addProperty(AttackAnimationProperty.ATTACK_SPEED_FACTOR, 0.0F)
                         .addProperty(ActionAnimationProperty.DEST_LOCATION_PROVIDER, MoveCoordFunctions.ATTACK_TARGET_LOCATION)
-                        .addProperty(ActionAnimationProperty.COORD_SET_BEGIN, MoveCoordFunctions.TRACE_ORIGIN_AS_DESTINATION)
+                        .addProperty(ActionAnimationProperty.COORD_SET_BEGIN, null)
                         .addProperty(ActionAnimationProperty.COORD_SET_TICK, MoveCoordFunctions.TRACE_TARGET_DISTANCE)
                         //.addProperty(ActionAnimationProperty.NO_GRAVITY_TIME, TimePairList.create(0.06F, 0.3F))
                         .addProperty(ActionAnimationProperty.CANCELABLE_MOVE, false)

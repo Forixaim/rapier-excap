@@ -2,7 +2,6 @@ package net.yonchi.refm.gameasset;
 
 import java.util.Set;
 
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
