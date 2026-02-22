@@ -43,20 +43,22 @@ public class DeadlyBackflipSkill_Wither extends WeaponInnateSkill {
     public void onInitiate(SkillContainer container) {
         super.onInitiate(container);
         container.getExecutor().getEventListener().addEventListener(EventType.ATTACK_ANIMATION_END_EVENT, EVENT_UUID, (event) -> {
-            List<LivingEntity> hurtEntities = event.getPlayerPatch().getCurrentlyActuallyHitEntities();
-            SkillContainer innateSkill = container.getExecutor().getSkill(SkillSlots.WEAPON_INNATE);
+            if (RapierAnimations.DEADLYBACKFLIP_FIRST.equals(event.getAnimation())) {
+                List<LivingEntity> hurtEntities = event.getPlayerPatch().getCurrentlyActuallyHitEntities();
+                SkillContainer innateSkill = container.getExecutor().getSkill(SkillSlots.WEAPON_INNATE);
 
-            if (!hurtEntities.isEmpty() && hurtEntities.get(0).isAlive()) {
-                event.getPlayerPatch().getServerAnimator().getPlayerFor(null).reset();
-                event.getPlayerPatch().reserveAnimation(this.second);
-                event.getPlayerPatch().getCurrentlyActuallyHitEntities().clear();
-            } else {
-                event.getPlayerPatch().getServerAnimator().getPlayerFor(null).reset();
-                event.getPlayerPatch().reserveAnimation(this.fail);
-                event.getPlayerPatch().getCurrentlyActuallyHitEntities().clear();
-                if (!container.getExecutor().isLogicalClient()) {
-                    if (innateSkill != null && innateSkill.getSkill() != null && event.getPlayerPatch().isLastAttackSuccess()) {
-                        innateSkill.getSkill().setConsumptionSynchronize(innateSkill, innateSkill.getResource() + this.consumption * 0.75F);
+                if (!hurtEntities.isEmpty() && hurtEntities.get(0).isAlive()) {
+                    event.getPlayerPatch().getServerAnimator().getPlayerFor(null).reset();
+                    event.getPlayerPatch().reserveAnimation(this.second);
+                    event.getPlayerPatch().getCurrentlyActuallyHitEntities().clear();
+                } else {
+                    event.getPlayerPatch().getServerAnimator().getPlayerFor(null).reset();
+                    event.getPlayerPatch().reserveAnimation(this.fail);
+                    event.getPlayerPatch().getCurrentlyActuallyHitEntities().clear();
+                    if (!container.getExecutor().isLogicalClient()) {
+                        if (innateSkill != null && innateSkill.getSkill() != null && event.getPlayerPatch().isLastAttackSuccess()) {
+                            innateSkill.getSkill().setConsumptionSynchronize(innateSkill, innateSkill.getResource() + this.consumption * 0.75F);
+                        }
                     }
                 }
             }
