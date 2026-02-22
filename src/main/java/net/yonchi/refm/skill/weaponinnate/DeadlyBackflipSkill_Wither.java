@@ -56,7 +56,7 @@ public class DeadlyBackflipSkill_Wither extends WeaponInnateSkill {
                 event.getPlayerPatch().getCurrentlyActuallyHitEntities().clear();
                 if (!container.getExecutor().isLogicalClient()) {
                     if (innateSkill != null && innateSkill.getSkill() != null && event.getPlayerPatch().isLastAttackSuccess()) {
-                        innateSkill.getSkill().setConsumptionSynchronize(innateSkill, innateSkill.getResource() + this.consumption);
+                        innateSkill.getSkill().setConsumptionSynchronize(innateSkill, innateSkill.getResource() + this.consumption * 0.75F);
                     }
                 }
             }
