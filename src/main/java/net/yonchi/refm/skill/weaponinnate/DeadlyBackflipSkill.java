@@ -45,7 +45,6 @@ public class DeadlyBackflipSkill extends WeaponInnateSkill {
         eventListener.registerEvent(EpicFightEventHooks.Animation.END, (event) -> {
             if (this.first.equals(event.getAnimation())) {
                 if (!hurtEntities.isEmpty() && hurtEntities.getFirst().isAlive()) {
-                    container.getExecutor().getCurrentlyActuallyHitEntities().clear();
                     container.getExecutor().reserveAnimation(this.second);
                     container.getExecutor().getServerAnimator().getPlayerFor(null).reset();
                 }
@@ -53,11 +52,12 @@ public class DeadlyBackflipSkill extends WeaponInnateSkill {
                     container.getExecutor().reserveAnimation(this.fail);
                 }
                 if (!container.getExecutor().isLogicalClient()) {
-                    if (innateSkill != null && innateSkill.getSkill() != null && eventListener.getEntityPatch().isLastAttackSuccess()) {
+                    if (innateSkill != null && innateSkill.getSkill() != null && eventListener.getEntityPatch().isLastAttackSuccess() && hurtEntities.getFirst().isDeadOrDying()) {
                         innateSkill.getSkill().setConsumptionSynchronize(innateSkill, this.consumption * 0.75F);
                     }
                 }
             }
+            if (this.second.equals(event.getAnimation()) || this.fail.equals(event.getAnimation())) {container.getExecutor().getCurrentlyActuallyHitEntities().clear();}
         }, this);
     }
 

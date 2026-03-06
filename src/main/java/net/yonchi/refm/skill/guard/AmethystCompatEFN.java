@@ -1,26 +1,10 @@
 package net.yonchi.refm.skill.guard;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 
-import net.yonchi.refm.RapierForEpicfight;
-import net.yonchi.refm.gameasset.RapierAnimations;
-import net.yonchi.refm.world.capabilities.item.RapierWeaponCategories;
-import net.yonchi.refm.world.item.RapierAddonItems;
-
-import yesman.epicfight.api.client.event.types.registry.RegisterWeaponCategoryIconEvent;
-import yesman.epicfight.api.event.types.registry.SkillBuilderModificationEvent;
 import yesman.epicfight.compat.ICompatModule;
-import yesman.epicfight.gameasset.Animations;
-import yesman.epicfight.skill.guard.GuardSkill;
-import yesman.epicfight.skill.guard.ParryingSkill;
 
-import java.util.List;
-
-public class AmethystCompatENF implements ICompatModule {
+public class AmethystCompatEFN implements ICompatModule {
     @Override
     public void onGameEventBus(IEventBus iEventBus) {}
     @Override
