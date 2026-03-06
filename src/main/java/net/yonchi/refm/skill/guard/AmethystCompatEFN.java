@@ -24,7 +24,7 @@ import yesman.epicfight.skill.guard.ParryingSkill;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = RapierForEpicfight.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class AmethystCompatENF implements ICompatModule {
+public class AmethystCompatEFN implements ICompatModule {
     public static void forceGuard(SkillBuildEvent bus) {
     }
 

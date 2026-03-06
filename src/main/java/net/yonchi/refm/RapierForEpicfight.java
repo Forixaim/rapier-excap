@@ -61,9 +61,9 @@ public class RapierForEpicfight {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> bus.addListener(RapierCompatWoM::regIcon));
         }
         if (ModList.get().isLoaded("efn")) {
-            ICompatModule.loadCompatModule(eventBus, RapierCompatENF.class);
-            bus.addListener(RapierCompatENF::forceGuard);
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> bus.addListener(RapierCompatENF::onIconCreate));
+            ICompatModule.loadCompatModule(eventBus, RapierCompatEFN.class);
+            bus.addListener(RapierCompatEFN::forceGuard);
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> bus.addListener(RapierCompatEFN::onIconCreate));
         }
         if (ModList.get().isLoaded("wom")) {
             if (ModList.get().isLoaded("irons_spellbooks")) {
@@ -74,9 +74,9 @@ public class RapierForEpicfight {
         }
         if (ModList.get().isLoaded("efn")) {
             if (ModList.get().isLoaded("irons_spellbooks")) {
-                ICompatModule.loadCompatModule(eventBus, AmethystCompatENF.class);
-                bus.addListener(AmethystCompatENF::forceGuard);
-                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> bus.addListener(AmethystCompatENF::onIconCreate));
+                ICompatModule.loadCompatModule(eventBus, AmethystCompatEFN.class);
+                bus.addListener(AmethystCompatEFN::forceGuard);
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> bus.addListener(AmethystCompatEFN::onIconCreate));
             }
         }
     }
