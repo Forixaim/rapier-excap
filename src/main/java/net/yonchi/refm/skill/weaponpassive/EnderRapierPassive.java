@@ -1,15 +1,15 @@
 package net.yonchi.refm.skill.weaponpassive;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
+import net.minecraft.world.level.Level;
 import yesman.epicfight.skill.SkillBuilder;
 import yesman.epicfight.skill.SkillContainer;
 import yesman.epicfight.skill.passive.PassiveSkill;
@@ -39,7 +39,9 @@ public class EnderRapierPassive extends PassiveSkill {
                 event.setCanceled(false);
             } else {
                 event.setCanceled(true);
-                teleportToSafeLocation(target);
+                if (!target.level().isClientSide) {
+                    teleportToSafeLocation(target);
+                }
             }
         });
     }
@@ -79,27 +81,29 @@ public class EnderRapierPassive extends PassiveSkill {
                 spawnPortalParticles(entity, entity.level().random);
                 entity.teleportTo(newX, pos.getY(), newZ);
                 spawnPortalParticles(entity, entity.level().random);
-                entity.level().playSound(null, entity.blockPosition(), SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                entity.level().playSound(null,entity.getX(),entity.getY(),entity.getZ(), SoundEvents.FOX_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.2F);
                 return;
             }
         }
     }
 
     private void spawnPortalParticles(Entity entity, RandomSource random) {
-        ClientLevel clientLevel = Minecraft.getInstance().level;
-        if (clientLevel != null) {
+        Level level = entity.level();
+        if (level instanceof ServerLevel serverLevel) {
             double horizontalRadius = 1.2;
             for (int i = 0; i < 69; i++) {
                 double xOffset = (random.nextDouble() - 0.4) * horizontalRadius;
                 double yOffset = (random.nextDouble() - random.nextDouble()) * 1.4D;
                 double zOffset = (random.nextDouble() - 0.4) * horizontalRadius;
-
-                clientLevel.addParticle(ParticleTypes.PORTAL,
+                serverLevel.sendParticles(
+                        ParticleTypes.PORTAL,
                         entity.getX() + xOffset,
                         entity.getY() + yOffset,
                         entity.getZ() + zOffset,
+                        1,
                         0,
                         0.2,
+                        0,
                         0
                 );
             }
