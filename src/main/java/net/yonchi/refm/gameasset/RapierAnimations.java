@@ -460,13 +460,14 @@ public class RapierAnimations {
         );
 
         DEADLYBACKFLIP_FAIL = builder.nextAccessor("biped/skill/rapier_backflip_fail", (accessor) ->
-                new AttackAnimation(0.15F, 0F, 0F, 0F, 0.28F, RapierColliderPreset.KICK, Armatures.BIPED.get().rootJoint, accessor, Armatures.BIPED)
+                new AttackAnimation(0.0F, 0F, 0F, 0F, 0.28F, RapierColliderPreset.KICK, Armatures.BIPED.get().rootJoint, accessor, Armatures.BIPED)
                         .addProperty(AttackPhaseProperty.SWING_SOUND, SoundEvents.EMPTY)
                         .addProperty(AttackPhaseProperty.HIT_SOUND, SoundEvents.EMPTY)
                         .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 2.6F)
                         .addProperty(AttackAnimationProperty.AFFECT_SPEED, true)
                         .addProperty(AttackAnimationProperty.ATTACK_SPEED_FACTOR, 0.0F)
                         .addProperty(ActionAnimationProperty.COORD_START_KEYFRAME_INDEX, 1)
+                        .addState(EntityState.SKILL_EXECUTABLE, false)
                         .addState(EntityState.TURNING_LOCKED, false));
         DEADLYBACKFLIP_FIRST = builder.nextAccessor("biped/skill/rapier_backflip_first", (accessor) ->
                 new AttackAnimation(0.1F, 0.2F, 0.32F, 0.96F, 1F, RapierColliderPreset.KICK, Armatures.BIPED.get().rootJoint, accessor, Armatures.BIPED)

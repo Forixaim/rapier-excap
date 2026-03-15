@@ -25,7 +25,7 @@ public class RapierAddonItems {
             new RapierItem(new Item.Properties().attributes(RapierItem.createRapierAttributes(Tiers.NETHERITE)).fireResistant().rarity(Rarity.RARE).durability(2851), Tiers.NETHERITE));
     public static final DeferredItem<Item> OCEANITE_RAPIER = ITEMS.register("oceanite_rapier", () ->
             new RapierItem(new Item.Properties().attributes(RapierItem.createRapierAttributes(Tiers.NETHERITE)).fireResistant().rarity(Rarity.RARE).durability(2851), Tiers.NETHERITE));
-    public static final DeferredItem<Item> AMETHYST_RAPIER = ITEMS.register("amethyst_rapier_compat", () -> new RapierItem(new Item.Properties().attributes(RapierItem.createRapierAttributes(Tiers.STONE)).rarity(Rarity.RARE).durability(1),Tiers.STONE));
+
     public static final DeferredItem<Item> END_UPGRADE = ITEMS.register("end_upgrade", () ->
             new Item(new Item.Properties().fireResistant().rarity(Rarity.UNCOMMON).stacksTo(16)));
     public static final DeferredItem<Item> WITHER_UPGRADE = ITEMS.register("wither_upgrade", () ->
