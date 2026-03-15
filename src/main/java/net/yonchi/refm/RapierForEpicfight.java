@@ -55,30 +55,14 @@ public class RapierForEpicfight {
         bus.addListener(this::addCreative);
         bus.addListener(this::commonStuff);
 
-        EpicFightClientEventHooks.Registry.WEAPON_CATEGORY_ICON.registerEvent(RapierCompatSkills::onWeaponCategoryIconCreation, 1);
         EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onGuardSkillCreation, 1);
         EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onParrySkillCreation, 2);
-        //EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onEmergencyEscapeSkillCreation);
-        EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onSwordMasterSkillCreation);
+        EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onEmergencyEscapeSkillCreation, 1);
+        EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onSwordMasterSkillCreation, 2);
         if (EpicFightSharedConstants.isPhysicalClient() && ModList.get().isLoaded("efn")) {
             EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onEFNParrySkillCreation, 3);
         }
-
-        EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(event -> {
-            if (event.getRegistryName().equals(EpicFightSkills.EMERGENCY_ESCAPE.getId())) {
-                if (event.getSkillBuilder() instanceof EmergencyEscapeSkill.Builder builder) {
-                    builder.addAvailableWeaponCategory(RapierWeaponCategories.RAPIER)
-                            .addAvailableWeaponCategory(RapierWeaponCategories.ENDER_RAPIER)
-                            .addAvailableWeaponCategory(RapierWeaponCategories.OCEAN_RAPIER)
-                            .addAvailableWeaponCategory(RapierWeaponCategories.WITHER_RAPIER);
-                    System.out.println("[RapierCompatSkills] Emergency escape has been implemented");
-                    if (EpicFightSharedConstants.isPhysicalClient() && ModList.get().isLoaded("irons_spellbooks")) {
-                        builder.addAvailableWeaponCategory(RapierWeaponCategories.AMETHYST_RAPIER);
-                        System.out.println("[RapierCompatSkills] Amethyst EmergencyEscape has been implemented");
-                    }
-                }
-            }
-        });
+        EpicFightClientEventHooks.Registry.WEAPON_CATEGORY_ICON.registerEvent(RapierCompatSkills::onWeaponCategoryIconCreation, 1);
 
     }
 
