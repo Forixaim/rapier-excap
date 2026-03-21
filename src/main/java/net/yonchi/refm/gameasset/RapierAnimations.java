@@ -14,6 +14,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -38,6 +39,7 @@ import yesman.epicfight.api.utils.HitEntityList;
 import yesman.epicfight.api.utils.TimePairList;
 import yesman.epicfight.api.utils.math.ValueModifier;
 import yesman.epicfight.api.utils.math.Vec3f;
+import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.gameasset.Armatures;
 import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.particle.EpicFightParticles;
@@ -464,13 +466,14 @@ public class RapierAnimations {
         );
 
         DEADLYBACKFLIP_FAIL = builder.nextAccessor("biped/skill/rapier_backflip_fail", (accessor) ->
-                new AttackAnimation(0.15F, 0F, 0F, 0F, 0.28F, RapierColliderPreset.KICK, Armatures.BIPED.get().rootJoint, accessor, Armatures.BIPED)
+                new AttackAnimation(0F, 0F, 0F, 0F, 0.28F, RapierColliderPreset.KICK, Armatures.BIPED.get().rootJoint, accessor, Armatures.BIPED)
                         .addProperty(AttackPhaseProperty.SWING_SOUND, SoundEvents.EMPTY)
                         .addProperty(AttackPhaseProperty.HIT_SOUND, SoundEvents.EMPTY)
                         .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 2.6F)
                         .addProperty(AttackAnimationProperty.AFFECT_SPEED, true)
                         .addProperty(AttackAnimationProperty.ATTACK_SPEED_FACTOR, 0.0F)
                         .addProperty(ActionAnimationProperty.COORD_START_KEYFRAME_INDEX, 1)
+                        .addState(EntityState.CAN_SKILL_EXECUTION, false)
                         .addState(EntityState.TURNING_LOCKED, true));
         DEADLYBACKFLIP_FIRST = builder.nextAccessor("biped/skill/rapier_backflip_first", (accessor) ->
                 new AttackAnimation(0.1F, 0.2F, 0.32F, 0.96F, 1F, RapierColliderPreset.KICK, Armatures.BIPED.get().rootJoint, accessor, Armatures.BIPED)

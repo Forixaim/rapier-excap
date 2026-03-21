@@ -1,10 +1,7 @@
 package net.yonchi.refm.world.capabilities.item;
 
-
-import java.util.Map;
 import java.util.function.Function;
 
-import com.google.common.collect.Maps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
