@@ -53,7 +53,6 @@ public class RapierForEpicfight {
         bus.addListener(RapierAnimations::registerAnimations);
         bus.addListener(this::addPackFindersEvent);
         bus.addListener(this::addCreative);
-        bus.addListener(this::commonStuff);
 
         EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onGuardSkillCreation, 1);
         EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onParrySkillCreation, 2);
@@ -63,14 +62,11 @@ public class RapierForEpicfight {
             EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onEFNParrySkillCreation, 3);
         }
         EpicFightClientEventHooks.Registry.WEAPON_CATEGORY_ICON.registerEvent(RapierCompatSkills::onWeaponCategoryIconCreation, 1);
+        EpicFightEventHooks.Registry.WEAPON_CAPABILITY_PRESET.registerEvent(WeaponCapabilityPresets::registerMovesets,1);
 
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-    }
-
-    public void commonStuff(FMLCommonSetupEvent event) {
-        event.enqueueWork(WeaponCapabilityPresets::registerMovesets);
     }
 
     public void addPackFindersEvent(AddPackFindersEvent event) {

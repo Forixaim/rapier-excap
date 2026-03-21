@@ -1,0 +1,11 @@
+{
+  "values": [
+    "refm:iron_rapier",
+    "refm:gold_rapier",
+    "refm:diamond_rapier",
+    "refm:netherite_rapier",
+    "refm:enderite_rapier",
+    "refm:oceanite_rapier",
+    "refm:witherite_rapier"
+  ]
+}

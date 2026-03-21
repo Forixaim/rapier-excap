@@ -9,6 +9,7 @@ import net.yonchi.refm.gameasset.*;
 
 import yesman.epicfight.api.animation.LivingMotions;
 import yesman.epicfight.api.event.EpicFightEventHooks;
+import yesman.epicfight.api.event.types.registry.WeaponCapabilityPresetRegistryEvent;
 import yesman.epicfight.world.capabilities.item.WeaponCapability;
 import yesman.epicfight.world.capabilities.item.CapabilityItem.Styles;
 
@@ -129,14 +130,12 @@ public class WeaponCapabilityPresets {
         return builder;
     };
 
-    public static void registerMovesets() {
-        EpicFightEventHooks.Registry.WEAPON_CAPABILITY_PRESET.registerEvent(event -> {
+    public static void registerMovesets(WeaponCapabilityPresetRegistryEvent event) {
             event.getTypeEntry().put(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID, "rapier"), RAPIER);
             event.getTypeEntry().put(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID, "ender_rapier"), ENDER_RAPIER);
             event.getTypeEntry().put(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID, "ocean_rapier"), OCEAN_RAPIER);
             event.getTypeEntry().put(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID, "wither_rapier"), WITHER_RAPIER);
             event.getTypeEntry().put(ResourceLocation.fromNamespaceAndPath(RapierForEpicfight.MOD_ID, "amethyst_rapier"), AMETHYST_RAPIER);
-        });
     }
 }
 //https://github.com/Epic-Fight/epicfight/blob/1.21.1/src/main/java/yesman/epicfight/world/capabilities/item/WeaponCapabilityPresets.java

@@ -12,19 +12,19 @@ public class RapierAddonItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(RapierForEpicfight.MOD_ID);
 
     public static final DeferredItem<Item> IRON_RAPIER = ITEMS.register("iron_rapier", () ->
-            new RapierItem(new Item.Properties().attributes(RapierItem.createRapierAttributes(Tiers.IRON)), Tiers.IRON));
+            new RapierItem(Tiers.IRON, new Item.Properties().attributes(RapierItem.createRapierAttributes(Tiers.IRON))));
     public static final DeferredItem<Item> GOLD_RAPIER = ITEMS.register("gold_rapier", () ->
-            new RapierItem(new Item.Properties().attributes(RapierItem.createRapierAttributes(Tiers.GOLD)), Tiers.GOLD));
+            new RapierItem(Tiers.GOLD, new Item.Properties().attributes(RapierItem.createRapierAttributes(Tiers.GOLD))));
     public static final DeferredItem<Item> DIAMOND_RAPIER = ITEMS.register("diamond_rapier", () ->
-            new RapierItem(new Item.Properties().attributes(RapierItem.createRapierAttributes(Tiers.DIAMOND)), Tiers.DIAMOND));
+            new RapierItem(Tiers.DIAMOND, new Item.Properties().attributes(RapierItem.createRapierAttributes(Tiers.DIAMOND))));
     public static final DeferredItem<Item> NETHERITE_RAPIER = ITEMS.register("netherite_rapier", () ->
-            new RapierItem(new Item.Properties().fireResistant().attributes(RapierItem.createRapierAttributes(Tiers.NETHERITE)), Tiers.NETHERITE));
+            new RapierItem(Tiers.NETHERITE, new Item.Properties().attributes(RapierItem.createRapierAttributes(Tiers.NETHERITE))));
     public static final DeferredItem<Item> ENDERITE_RAPIER = ITEMS.register("enderite_rapier", () ->
-            new RapierItem(new Item.Properties().attributes(RapierItem.createRapierAttributes(Tiers.NETHERITE)).fireResistant().rarity(Rarity.RARE).durability(2851), Tiers.NETHERITE));
+            new RapierItem(Tiers.NETHERITE, new Item.Properties().attributes(RapierItem.createRapierAttributes(Tiers.NETHERITE)).fireResistant().rarity(Rarity.RARE).durability(2851)));
     public static final DeferredItem<Item> WITHERITE_RAPIER = ITEMS.register("witherite_rapier", () ->
-            new RapierItem(new Item.Properties().attributes(RapierItem.createRapierAttributes(Tiers.NETHERITE)).fireResistant().rarity(Rarity.RARE).durability(2851), Tiers.NETHERITE));
+            new RapierItem(Tiers.NETHERITE, new Item.Properties().attributes(RapierItem.createRapierAttributes(Tiers.NETHERITE)).fireResistant().rarity(Rarity.RARE).durability(2851)));
     public static final DeferredItem<Item> OCEANITE_RAPIER = ITEMS.register("oceanite_rapier", () ->
-            new RapierItem(new Item.Properties().attributes(RapierItem.createRapierAttributes(Tiers.NETHERITE)).fireResistant().rarity(Rarity.RARE).durability(2851), Tiers.NETHERITE));
+            new RapierItem(Tiers.NETHERITE, new Item.Properties().attributes(RapierItem.createRapierAttributes(Tiers.NETHERITE)).fireResistant().rarity(Rarity.RARE).durability(2851)));
 
     public static final DeferredItem<Item> END_UPGRADE = ITEMS.register("end_upgrade", () ->
             new Item(new Item.Properties().fireResistant().rarity(Rarity.UNCOMMON).stacksTo(16)));
