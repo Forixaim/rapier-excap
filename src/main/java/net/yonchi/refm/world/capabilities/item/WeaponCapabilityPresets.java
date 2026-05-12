@@ -8,7 +8,6 @@ import net.yonchi.refm.RapierForEpicfight;
 import net.yonchi.refm.gameasset.*;
 
 import yesman.epicfight.api.animation.LivingMotions;
-import yesman.epicfight.api.event.EpicFightEventHooks;
 import yesman.epicfight.api.event.types.registry.WeaponCapabilityPresetRegistryEvent;
 import yesman.epicfight.world.capabilities.item.WeaponCapability;
 import yesman.epicfight.world.capabilities.item.CapabilityItem.Styles;

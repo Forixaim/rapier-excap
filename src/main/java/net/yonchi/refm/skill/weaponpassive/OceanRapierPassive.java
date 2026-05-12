@@ -38,7 +38,7 @@ public class OceanRapierPassive extends PassiveSkill {
                         MobEffectInstance breathingEffect = new MobEffectInstance(MobEffects.CONDUIT_POWER, duration, amplifier2, true, false);
                         player.addEffect(dolphinEffect);
                         player.addEffect(breathingEffect);
-                        if (player.isSprinting()) {
+                        if (player.isSprinting() && player.isUnderWater()) {
                             Vec3 velocity = player.getDeltaMovement();
                             double speed = Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y + velocity.z * velocity.z);
                             double speedThreshold = 0.286;

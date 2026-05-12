@@ -14,7 +14,6 @@ import net.minecraft.server.packs.repository.PackSource;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
@@ -30,8 +29,6 @@ import net.yonchi.refm.world.item.RapierAddonItems;
 import yesman.epicfight.api.client.event.EpicFightClientEventHooks;
 import yesman.epicfight.api.event.EpicFightEventHooks;
 import yesman.epicfight.main.EpicFightSharedConstants;
-import yesman.epicfight.registry.entries.EpicFightSkills;
-import yesman.epicfight.skill.passive.EmergencyEscapeSkill;
 import yesman.epicfight.world.capabilities.item.WeaponCategory;
 
 import java.nio.file.Path;
@@ -54,16 +51,16 @@ public class RapierForEpicfight {
         bus.addListener(this::addPackFindersEvent);
         bus.addListener(this::addCreative);
 
+        //EVENT HOOKS
         EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onGuardSkillCreation, 1);
         EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onParrySkillCreation, 2);
         EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onEmergencyEscapeSkillCreation, 1);
-        EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onSwordMasterSkillCreation, 2);
+        EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onSwordMasterSkillCreation, 1);
         if (EpicFightSharedConstants.isPhysicalClient() && ModList.get().isLoaded("efn")) {
-            EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onEFNParrySkillCreation, 3);
+            EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onEFNParrySkillCreation, 2);
         }
         EpicFightClientEventHooks.Registry.WEAPON_CATEGORY_ICON.registerEvent(RapierCompatSkills::onWeaponCategoryIconCreation, 1);
         EpicFightEventHooks.Registry.WEAPON_CAPABILITY_PRESET.registerEvent(WeaponCapabilityPresets::registerMovesets,1);
-
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {

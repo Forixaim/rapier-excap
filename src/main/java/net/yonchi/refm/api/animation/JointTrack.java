@@ -19,6 +19,7 @@ public class JointTrack {
                 if (entitypatch != null) {
                     float interpolation = 0.0F;
                     OpenMatrix4f transformMatrix;
+                    joint = getMirroredJoint(entitypatch, joint);
                     transformMatrix = entitypatch.getArmature().getBoundTransformFor(entitypatch.getAnimator().getPose(interpolation), joint);
                     transformMatrix.translate(translation);
                     OpenMatrix4f.mul((new OpenMatrix4f()).rotate(-((float) Math.toRadians((double) (((LivingEntity) entitypatch.getOriginal()).yBodyRotO + 180.0F))), new Vec3f(0.0F, 1.0F, 0.0F)), transformMatrix, transformMatrix);
@@ -31,5 +32,27 @@ public class JointTrack {
             }
         }
         return null;
+    }
+    private static Joint getMirroredJoint(LivingEntityPatch<?> patch, Joint joint) {
+        if (joint == null) {
+            return null;
+        }
+        if (!patch.isMirrorMode()) {
+            return joint;
+        }
+        String name = joint.getName();
+        String mirroredName = null;
+        if (name.endsWith("_L") || name.endsWith("L")) {
+            mirroredName = name.replaceAll("_?L$", "_R");
+        } else if (name.endsWith("_R") || name.endsWith("R")) {
+            mirroredName = name.replaceAll("_?R$", "_L");
+        }
+        if (mirroredName != null) {
+            Joint mirroredJoint = patch.getArmature().searchJointByName(mirroredName);
+            if (mirroredJoint != null) {
+                return mirroredJoint;
+            }
+        }
+        return joint;
     }
 }

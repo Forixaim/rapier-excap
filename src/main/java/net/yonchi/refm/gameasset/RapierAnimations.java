@@ -9,7 +9,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
@@ -439,7 +438,7 @@ public class RapierAnimations {
                         .addProperty(ActionAnimationProperty.CANCELABLE_MOVE, false)
                         .addEvents(
                                 AnimationEvent.InTimeEvent.create(0.12F, (entitypatch, param2, param3) -> {
-                                    ((ServerPlayer) entitypatch.getOriginal()).addEffect(new MobEffectInstance(
+                                    ((LivingEntity) entitypatch.getOriginal()).addEffect(new MobEffectInstance(
                                             BuiltInRegistries.MOB_EFFECT.wrapAsHolder(EpicFightMobEffects.STUN_IMMUNITY.get()),
                                             38, 0, true, false, false
                                     ));
@@ -448,10 +447,10 @@ public class RapierAnimations {
                                 AnimationEvent.InPeriodEvent.create(0.24F, 0.72F, ReusableEvents.WITHER_PARTICLES, AnimationEvent.Side.CLIENT),
                                 AnimationEvent.InPeriodEvent.create(0.48F, 1.68F, ReusableEvents.WITHER_PARTICLES_TINY, AnimationEvent.Side.CLIENT),
                                 AnimationEvent.InTimeEvent.create(0.26F, (entitypatch, param2, param3) -> {
-                                    ((ServerPlayer) entitypatch.getOriginal()).addEffect(
+                                    ((LivingEntity) entitypatch.getOriginal()).addEffect(
                                             new MobEffectInstance((Holder<MobEffect>) MobEffects.DARKNESS, 48, 1, true, false, false)
                                     );
-                                    ((ServerPlayer) entitypatch.getOriginal()).addEffect(
+                                    ((LivingEntity) entitypatch.getOriginal()).addEffect(
                                             new MobEffectInstance((Holder<MobEffect>) MobEffects.MOVEMENT_SLOWDOWN, 42, 2, true, false, false)
                                     );
                                 }, AnimationEvent.Side.SERVER)
@@ -609,7 +608,7 @@ public class RapierAnimations {
                                 AnimationEvent.InPeriodEvent.create(1.6F, 2.4F, ReusableEvents.WITHER_PARTICLES_TINY, AnimationEvent.Side.CLIENT),
                                 AnimationEvent.InPeriodEvent.create(2.6F, 2.8F, ReusableEvents.WITHER_PARTICLES, AnimationEvent.Side.CLIENT),
                                 AnimationEvent.InTimeEvent.create(0.24F, (entitypatch, param2, param3) -> {
-                                    ((ServerPlayer) entitypatch.getOriginal()).addEffect(
+                                    ((LivingEntity) entitypatch.getOriginal()).addEffect(
                                             new MobEffectInstance((Holder<MobEffect>) MobEffects.DARKNESS, 69, 0, true, false, false)
                                     );
                                 }, AnimationEvent.Side.SERVER)
