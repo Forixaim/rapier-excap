@@ -1,0 +1,19 @@
+package net.yonchi.refm.registry;
+
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.yonchi.refm.registry.entries.RapierAddonItems;
+import net.yonchi.refm.registry.entries.RapierModCreativeTabs;
+import net.yonchi.refm.registry.entries.RapierModItemPresets;
+import net.yonchi.refm.registry.entries.RapierModMovesets;
+
+import java.util.List;
+
+public class RapierModRegistries {
+
+    public static List<DeferredRegister<?>> REGISTRIES = List.of(
+            RapierModItemPresets.REGISTRY,
+            RapierModMovesets.REGISTRY,
+            RapierAddonItems.REGISTRY,
+            RapierModCreativeTabs.REGISTRY
+    );
+}

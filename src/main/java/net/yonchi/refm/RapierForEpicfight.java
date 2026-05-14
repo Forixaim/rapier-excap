@@ -1,5 +1,6 @@
 package net.yonchi.refm;
 
+import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,14 +18,12 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
-import net.yonchi.refm.gameasset.RapierSkills;
+import net.yonchi.refm.registry.entries.RapierSkills;
 import net.yonchi.refm.gameasset.RapierAnimations;
-import net.yonchi.refm.gameasset.RapierSounds;
+import net.yonchi.refm.registry.entries.RapierSounds;
 import net.yonchi.refm.skill.guard.*;
-import net.yonchi.refm.world.capabilities.item.WeaponCapabilityPresets;
 import net.yonchi.refm.world.capabilities.item.RapierWeaponCategories;
-import net.yonchi.refm.world.item.RapierTab;
-import net.yonchi.refm.world.item.RapierAddonItems;
+import net.yonchi.refm.registry.entries.RapierAddonItems;
 
 import yesman.epicfight.api.client.event.EpicFightClientEventHooks;
 import yesman.epicfight.api.event.EpicFightEventHooks;
@@ -39,12 +38,16 @@ public class RapierForEpicfight {
     public static final String MOD_ID = "refm";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
+    public static ResourceLocation identifier(String name)
+    {
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, name);
+    }
+
     public RapierForEpicfight(IEventBus bus) {
-        RapierTab.register(bus);
         WeaponCategory.ENUM_MANAGER.registerEnumCls(MOD_ID, RapierWeaponCategories.class);
 
-        RapierAddonItems.ITEMS.register(bus);
-        RapierSounds.SOUNDS.register(bus);
+        RapierAddonItems.REGISTRY.register(bus);
+        RapierSounds.REGISTRY.register(bus);
         RapierSkills.REGISTRY.register(bus);
 
         bus.addListener(RapierAnimations::registerAnimations);
@@ -52,15 +55,12 @@ public class RapierForEpicfight {
         bus.addListener(this::addCreative);
 
         //EVENT HOOKS
-        EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onGuardSkillCreation, 1);
-        EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onParrySkillCreation, 2);
         EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onEmergencyEscapeSkillCreation, 1);
         EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onSwordMasterSkillCreation, 1);
         if (EpicFightSharedConstants.isPhysicalClient() && ModList.get().isLoaded("efn")) {
             EpicFightEventHooks.Registry.MODIFY_SKILL_BUILDER.registerEvent(RapierCompatSkills::onEFNParrySkillCreation, 2);
         }
         EpicFightClientEventHooks.Registry.WEAPON_CATEGORY_ICON.registerEvent(RapierCompatSkills::onWeaponCategoryIconCreation, 1);
-        EpicFightEventHooks.Registry.WEAPON_CAPABILITY_PRESET.registerEvent(WeaponCapabilityPresets::registerMovesets,1);
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
