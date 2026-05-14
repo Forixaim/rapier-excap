@@ -28,21 +28,28 @@ public final class RapierModMovesets
 
     public static final DeferredMoveset ENDER_RAPIER = REGISTRY.registerMoveset("ender_rapier", () -> Moveset.builder()
             .parent(RAPIER)
+            .setPassiveSkill(RapierSkills.ENDER_PASSIVE)
             .addComboAttacks(RapierAnimations.RAPIER_AUTO1, RapierAnimations.RAPIER_AUTO2_ENDER, RapierAnimations.RAPIER_AUTO3_ENDER, RapierAnimations.RAPIER_DASH_ENDER, RapierAnimations.RAPIER_AIR_SLASH_ENDER)
+            .revelationAttack(RapierAnimations.RAPIER_GUARD_PARRY_ENDER)
             .addInnateSkill((itemStack, patch) -> RapierSkills.DEADLYBACKFLIP_ENDER.get()));
 
     public static final DeferredMoveset OCEAN_RAPIER = REGISTRY.registerMoveset("ocean_rapier", () -> Moveset.builder()
             .parent(RAPIER)
+            .setPassiveSkill(RapierSkills.OCEAN_PASSIVE)
             .addComboAttacks(RapierAnimations.RAPIER_AUTO1, RapierAnimations.RAPIER_AUTO2_OCEAN, RapierAnimations.RAPIER_AUTO3_OCEAN, RapierAnimations.RAPIER_DASH_OCEAN, RapierAnimations.RAPIER_AIR_SLASH_OCEAN)
+            .revelationAttack(RapierAnimations.RAPIER_GUARD_PARRY_OCEAN)
             .addInnateSkill((itemStack, patch) -> RapierSkills.DEADLYBACKFLIP_OCEAN.get()));
 
     public static final DeferredMoveset WITHER_RAPIER = REGISTRY.registerMoveset("wither_rapier", () -> Moveset.builder()
             .parent(RAPIER)
+            .setPassiveSkill(RapierSkills.WITHER_PASSIVE)
             .addComboAttacks(RapierAnimations.RAPIER_AUTO1, RapierAnimations.RAPIER_AUTO2_WITHER, RapierAnimations.RAPIER_AUTO3_WITHER, RapierAnimations.RAPIER_DASH_WITHER, RapierAnimations.RAPIER_AIR_SLASH_WITHER)
+            .revelationAttack(RapierAnimations.RAPIER_GUARD_PARRY_WITHER)
             .addInnateSkill((itemStack, patch) -> RapierSkills.DEADLYBACKFLIP_WITHER.get()));
 
     public static final DeferredMoveset AMETHYST_RAPIER = REGISTRY.registerMoveset("amethyst_rapier", () -> Moveset.builder()
             .parent(RAPIER)
             .addComboAttacks(RapierAnimations.RAPIER_AUTO1, RapierAnimations.RAPIER_AUTO2_AMETHYST, RapierAnimations.RAPIER_AUTO3_AMETHYST, RapierAnimations.RAPIER_DASH_AMETHYST, RapierAnimations.RAPIER_AIR_SLASH_AMETHYST)
+            .revelationAttack(RapierAnimations.RAPIER_GUARD_PARRY_AMETHYST)
             .addInnateSkill((itemStack, patch) -> RapierSkills.DEADLYBACKFLIP_AMETHYST.get()));
 }

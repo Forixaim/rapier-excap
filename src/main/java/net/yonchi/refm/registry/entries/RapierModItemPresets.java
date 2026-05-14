@@ -25,17 +25,25 @@ public final class RapierModItemPresets
 
     public static final DeferredWeapon ENDER_RAPIER = REGISTRY.registerWeapon("ender_rapier", () -> WeaponCapability.builder()
             .parent(RAPIER)
+            .swingSound(RapierSounds.RAPIER_STAB)
+            .hitSound(RapierSounds.RAPIER_HIT)
             .addMoveset(CapabilityItem.Styles.OCHS, RapierModMovesets.ENDER_RAPIER));
 
     public static final DeferredWeapon OCEAN_RAPIER = REGISTRY.registerWeapon("ocean_rapier", () -> WeaponCapability.builder()
             .parent(RAPIER)
+            .swingSound(RapierSounds.RAPIER_STAB)
+            .hitSound(RapierSounds.RAPIER_HIT)
             .addMoveset(CapabilityItem.Styles.OCHS, RapierModMovesets.OCEAN_RAPIER));
 
     public static final DeferredWeapon WITHER_RAPIER = REGISTRY.registerWeapon("wither_rapier", () -> WeaponCapability.builder()
             .parent(RAPIER)
+            .swingSound(RapierSounds.RAPIER_STAB)
+            .hitSound(RapierSounds.RAPIER_HIT)
             .addMoveset(CapabilityItem.Styles.OCHS, RapierModMovesets.WITHER_RAPIER));
 
     public static final DeferredWeapon AMETHYST_RAPIER = REGISTRY.registerWeapon("amethyst_rapier", () -> WeaponCapability.builder()
             .parent(RAPIER)
+            .swingSound(RapierSounds.RAPIER_STAB)
+            .hitSound(RapierSounds.RAPIER_HIT)
             .addMoveset(CapabilityItem.Styles.OCHS, RapierModMovesets.AMETHYST_RAPIER));
 }

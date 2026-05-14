@@ -1,6 +1,7 @@
 package net.yonchi.refm;
 
 import net.minecraft.resources.ResourceLocation;
+import net.yonchi.refm.registry.RapierModRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,9 +47,7 @@ public class RapierForEpicfight {
     public RapierForEpicfight(IEventBus bus) {
         WeaponCategory.ENUM_MANAGER.registerEnumCls(MOD_ID, RapierWeaponCategories.class);
 
-        RapierAddonItems.REGISTRY.register(bus);
-        RapierSounds.REGISTRY.register(bus);
-        RapierSkills.REGISTRY.register(bus);
+        RapierModRegistries.REGISTRIES.forEach(value -> value.register(bus));
 
         bus.addListener(RapierAnimations::registerAnimations);
         bus.addListener(this::addPackFindersEvent);
@@ -71,12 +70,21 @@ public class RapierForEpicfight {
             Path resourcePath = ModList.get().getModFileById(RapierForEpicfight.MOD_ID).getFile().findResource("packs/all_rapiers_3D");
 
             PackLocationInfo packLocation = new PackLocationInfo("all_rapiers_3D", Component.translatable("pack.all_rapiers_3D.title"), PackSource.BUILT_IN, Optional.empty());
-            Pack.ResourcesSupplier resourcesSupplier = new PathPackResources.PathResourcesSupplier(resourcePath);
-            Pack pack = Pack.readMetaAndCreate(packLocation, resourcesSupplier, PackType.CLIENT_RESOURCES, new PackSelectionConfig(false, Pack.Position.TOP, false));
+            addPack(event, resourcePath, packLocation);
 
-            if (pack != null) {
-                event.addRepositorySource(source -> source.accept(pack));
-            }
+            Path forixaimRapiersPath = ModList.get().getModFileById(RapierForEpicfight.MOD_ID).getFile().findResource("packs/forixaim_rapiers");
+
+            PackLocationInfo forixaimRapiers = new PackLocationInfo("forixaim_rapiers", Component.translatable("pack.forixaim_rapiers.title"), PackSource.BUILT_IN, Optional.empty());
+            addPack(event, forixaimRapiersPath, forixaimRapiers);
+        }
+    }
+
+    private void addPack(AddPackFindersEvent event, Path forixaimRapiersPath, PackLocationInfo forixaimRapiers) {
+        Pack.ResourcesSupplier forixaimRapiersSupplier = new PathPackResources.PathResourcesSupplier(forixaimRapiersPath);
+        Pack forixaimRapiersPack = Pack.readMetaAndCreate(forixaimRapiers, forixaimRapiersSupplier, PackType.CLIENT_RESOURCES, new PackSelectionConfig(false, Pack.Position.TOP, false));
+
+        if (forixaimRapiersPack != null) {
+            event.addRepositorySource(source -> source.accept(forixaimRapiersPack));
         }
     }
 }

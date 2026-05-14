@@ -109,7 +109,7 @@ sourceSets.main {
 
 dependencies {
     implementation(libs.epicFight)
-    implementation(libs.iss)
+    compileOnly(libs.iss)
     runtimeOnly(libs.moonlight)
     runtimeOnly(libs.dummy)
     implementation(libs.epicskills)
